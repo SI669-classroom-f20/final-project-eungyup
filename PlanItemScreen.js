@@ -51,47 +51,39 @@ export class PlanItemScreen extends React.Component {
             this.itemOperation = this.props.route.params.itemOperation;
             console.log('(PlanItem) this.itemOperation', this.itemOperation);
 
-            /*
-            // This is for "edit" from Home
-            if(this.props.route.params.operation === 'edit') {
-                // console.log('(TripPlan) worked');
-                console.log('(TripPlan) edit item', this.props.route.params.item)
 
-                userId = this.props.route.params.item.userId;
-                console.log('(TripPlan) edit userId', userId);
-                initTripTitle = this.props.route.params.item.tripTitle;
-                initTripCategory = this.props.route.params.item.tripCategory;
-                initTripStatus = this.props.route.params.item.tripStatus;
-        
+            // This is for "edit" from TripPlan
+            if(this.props.route.params.itemOperation === 'edit') {
+                // console.log('(TripPlan) worked');
+                console.log('(Plan Item) edit tehItem', this.props.route.params.theItem)
+
+
+                initItemTitle = this.props.route.params.theItem.itemTitle;
                 // For Start Date
 
-                initTripStartDateString = this.props.route.params.item.tripStartDateString;
+                initItemStartDateString = this.props.route.params.theItem.itemStartDateString;
 
                 // (my) due to complicated format, I don't get tripStartDate (just use the default above is sufficient)
                 // initTripStartDate = this.props.route.params.item.tripStartDate;
                 // Since I should not store tripStartShow (open and close calendar) in the firebase and local model don't inculude this
                 // let initTripStartShow = false;
-        
+
                 // For End Date
 
-                initTripEndDateString = this.props.route.params.item.tripEndDateString;
+                initItemEndDateString = this.props.route.params.theItem.itemEndDateString;
 
                 // (my) due to complicated format, I don't get tripStartDate (just use the default above is sufficient)
                 // initTripEndDate = this.props.route.params.item.tripEndDate;
                 // Since I should not store tripEndShow (open and close calendar) in the firebase and local model don't inculude this
                 // let initTtripEndShow = false;
-        
-                initTotalBudget = this.props.route.params.item.totalBudget;
-                initTotalSpending = this.props.route.params.item.totalSpending;
-                initMoneyLeft = this.props.route.params.item.moneyLeft;
-        
-                initNotes = this.props.route.params.item.notes;
 
-                initImageURL = this.props.route.params.item.imageURL;
+                initItemBudget = this.props.route.params.theItem.itemBudget;
+                initItemSpending = this.props.route.params.theItem.itemSpending;
+
+                initItemNotes = this.props.route.params.theItem.itemNotes;
             }
-            */
         }
-        
+
 
         this.state = {
 
@@ -180,9 +172,9 @@ export class PlanItemScreen extends React.Component {
         }
         else {
             console.log("(PlanItem) edited in PlanItem (this.itemOperation): ", this.itemOperation);
-            console.log("(PlanItem)  edited in PlanItem (this.props.route.params.item): ", this.props.route.params.item);
-            // (my) by geeting the whole "item", I can get the same key
-            theItem = this.props.route.params.item;
+            console.log("(PlanItem)  edited in PlanItem (this.props.route.params.theItem): ", this.props.route.params.theItem);
+            // // (my) by geting the whole "theItem", I can get the same key
+            theItem = this.props.route.params.theItem;
             theItem.itemTitle = this.state.itemTitle;
 
             theItem.itemStartDateString = this.state.itemStartDateString;

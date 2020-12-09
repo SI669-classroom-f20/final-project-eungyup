@@ -177,7 +177,7 @@ export class TripPlanScreen extends React.Component {
                 this.addItem(theItem);
             }
             else if (itemOperation === 'edit') {
-                console.log('(TripPlan onFouce add -> theItem', theItem);
+                console.log('(TripPlan onFouce edit -> theItem', theItem);
                 this.updateItem(theItem);
             }
         }
@@ -191,6 +191,26 @@ export class TripPlanScreen extends React.Component {
 
         this.setState({planItems: newList});
         console.log('(TripPlan) addItem new planItems list: ', this.state.planItems);
+    }
+
+    updateItem = (theItem) => {
+        console.log('(TripPlan) updateItem old planItems list: ', this.state.planItems);
+        let newList = this.state.planItems;
+        let foundIndex = -1;
+
+        for (let idx in newList){
+            if(newList[idx].itemKey === theItem.itemKey){
+                foundIndex = idx;
+                break;
+            }
+        }
+
+        if(foundIndex !== -1){
+            newList[foundIndex] = theItem;
+        }
+
+        this.setState({planItems: newList});
+        console.log('(TripPlan) updateItem new planItems list: ', this.state.planItems);
     }
 
 
@@ -315,6 +335,40 @@ export class TripPlanScreen extends React.Component {
         console.log('(Trip Plan) pickImage this.state.imageURL', this.state.imageURL);
 
     };
+
+    onEdit = (item) => {
+        this.props.navigation.navigate("PlanItem",{
+            itemOperation: 'edit',
+            theItem: item
+        })
+    }
+
+    deleteItem = (itemKey) => {
+        console.log('(Trip Plan) deleteItem itemKey', itemKey);
+
+        let newList = this.state.planItems;
+        let foundIndex = -1;
+
+        for(let idx in newList){
+            if(newList[idx].itemKey === itemKey){
+                foundIndex = idx;
+                break;
+            }
+        }
+
+        if (foundIndex !== -1){
+            newList.splice(foundIndex,1); // remove one element
+        }
+
+        this.setState({planItems: newList});
+    }
+
+    onDelete = (itemKey) => {
+        console.log('(Trip Plan) onDelete itemKey', itemKey);
+        this.deleteItem(itemKey);
+    }
+
+
 
     render() {
         return (
@@ -564,6 +618,29 @@ export class TripPlanScreen extends React.Component {
                                     <View style={tripPlanStyles.flatRenderItemContainer}>
                                         <FontAwesome name="circle" size={40} color={colors.primary} />
                                         <Text style={tripPlanStyles.flatRenderText}>{item.itemTitle}</Text>
+
+                                        <MaterialIcons name="edit"
+                                            size={21}
+                                            color={colors.primary}
+                                            style={tripPlanStyles.editIcon}
+                                            onPress={() => {this.onEdit(item)}}
+                                            />
+                                        <Ionicons name="md-trash"
+                                            size={21}
+                                            color={colors.primary}
+                                            // Add Cancel Confirmation
+                                            onPress={()=>{
+                                            let itemTitle = item.itemTitle;
+                                            Alert.alert(
+                                                'Delete Item?',
+                                                'Are you sure you want to delete "'+ itemTitle + '"?',
+                                                [
+                                                {text: "Cancel", style:"cancel"},
+                                                {text: "Delete", onPress: ()=> this.onDelete(item.itemKey)}
+                                                ],
+                                                {cancelable: false}
+                                            )
+                                            }} />
                                     </View>
                                     {/* Vertical Line */}
                                     <View style={tripPlanStyles.flatRenderItemVerticalLine}/>

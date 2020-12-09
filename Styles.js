@@ -466,6 +466,10 @@ export const tripPlanStyles = StyleSheet.create({
                 flexDirection: 'row',
                 alignItems: 'center',
             },
+            editIcon: {
+                paddingLeft: 20,
+                paddingRight: 10,
+            },
                 flatRenderText: {
                     paddingLeft: 12,
                     fontSize: fontSizes.regular,
