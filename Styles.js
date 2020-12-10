@@ -245,7 +245,7 @@ export const tripPlanStyles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        alignItems: 'center',
+        // alignItems: 'center',
         justifyContent: 'center',
         // marginTop: Constants.statusBarHeight,
     },
@@ -377,7 +377,7 @@ export const tripPlanStyles = StyleSheet.create({
                     moneyText: {
                         fontSize: fontSizes.regular,
                     },
-                    defaultNumberText: {
+                    moneyDescriptions: {
                         width: '90%',
                         fontSize: fontSizes.small,
                         color: colors.outline,
@@ -671,7 +671,7 @@ export const planItemStyles = StyleSheet.create({
                     marginBottom: 15,
                     marginLeft: 5,
                     flexDirection: 'row',
-                    alignItems: 'center',
+                    // alignItems: 'center',
                 },
                     moneyText: {
                         fontSize: fontSizes.regular,

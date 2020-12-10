@@ -26,7 +26,6 @@ export class TripPlanScreen extends React.Component {
         // local dataModel
         this.dataModel = getDataModel();
 
-
         // Initial setup
         let userId = '';
         let initTripTitle = '';
@@ -148,6 +147,10 @@ export class TripPlanScreen extends React.Component {
 
             // Plan Items List
             planItems: initPlanItems,
+
+            totalBudgetText: '(Once you add a budget in a plan item, the total budget will be updated automatically.)',
+            totalSpendingText: '(Once you add a spending in a plan item, the total spending will be updated automatically.)',
+            moneyLeftText: '(Once you add a budget and a spending in a plan item, the money left will be updated automatically.)'
         }
 
         // (my) just ignore the warnign sign
@@ -162,25 +165,32 @@ export class TripPlanScreen extends React.Component {
     */
     componentDidMount() {
         this.focusUnsubscribe = this.props.navigation.addListener('focus', this.onFocus);
+        // get the updated mony
+        // this.calcurateMoney();
     }
 
     componentWillUnmount() {
         this.focusUnsubscribe();
     }
 
-    onFocus = async () => {
-        if (this.props.route.params.theItem) {
-            const {itemOperation, theItem} = this.props.route.params;
+    onFocus = () => {
+        console.log('(TripPlan) onFocus check on the top working ');
+        if (this.props.route.params) {
+            console.log('(TripPlan) onFocus inside working ');
+            let itemOperation = this.props.route.params.itemOperation;
+            let theItem = this.props.route.params.theItem;
+            // const {itemOperation, theItem} = this.props.route.params.theItem;
             // item is an object
             if (itemOperation === 'add') {
                 console.log('(TripPlan onFouce add -> theItem', theItem);
                 this.addItem(theItem);
             }
-            else if (itemOperation === 'edit') {
+            if (itemOperation === 'edit') {
                 console.log('(TripPlan onFouce edit -> theItem', theItem);
                 this.updateItem(theItem);
             }
         }
+        this.calcurateMoney();
         this.props.navigation.setParams({itemOperation: 'none'});
     }
 
@@ -211,9 +221,42 @@ export class TripPlanScreen extends React.Component {
 
         this.setState({planItems: newList});
         console.log('(TripPlan) updateItem new planItems list: ', this.state.planItems);
+
     }
 
+    calcurateMoney = () => {
+        let theBudget = 0;
+        let theSpending = 0 ;
+        let theMoneyLeft = 0;
 
+        let newList = this.state.planItems;
+        console.log('(TripPlan) calcurateMoney newList: ', newList);
+
+        for(let item of newList){
+            if(item.itemBudget){
+                theBudget += Number(item.itemBudget);
+                console.log('(TripPlan) calcurateMoney theBudget:', theBudget);
+            }
+            if(item.itemSpending){
+                theSpending += Number(item.itemSpending);
+                console.log('(TripPlan) calcurateMoney theSpending:', theSpending);
+            }
+        }
+
+        if(theBudget !== 0 && theSpending !==0){
+            theMoneyLeft = Number(theBudget - theSpending);
+            console.log('(TripPlan) calcurateMoney theMoneyLeft:', theMoneyLeft);
+        }
+
+        this.setState({totalBudget: theBudget, totalSpending: theSpending, moneyLeft: theMoneyLeft});
+        // this.setState({totalBudget: theBudget});
+        // this.setState({totalSpending: theSpending});
+        // this.setState({moneyLeft: theMoneyLeft});
+
+        console.log('(TripPlan) calcurateMoney this.state.totalBudget:', this.state.totalBudget);
+        console.log('(TripPlan) calcurateMoney this.state.totalSpending:', this.state.totalSpending);
+        console.log('(TripPlan) calcurateMoney this.state.moneyLeft:', this.state.moneyLeft);
+    }
 
     onChangeStartDate = (event, selectedDate) => {
         // console.log('new Date()', new Date());
@@ -515,33 +558,36 @@ export class TripPlanScreen extends React.Component {
                                         </View>
 
                                         {/* Total Budget */}
-                                        <View style={this.state.totalBudget == 0 ? tripPlanStyles.moneyDefaultContainer : tripPlanStyles.moneyContainer}>
-                                            <Text style={tripPlanStyles.moneyText}>Total Budget: </Text>
-                                            {this.state.totalBudget == 0 ?
-                                                <Text style={tripPlanStyles.defaultNumberText}>Once you add a budget in a plan item, the Total Budget will be updated automatically.</Text>
-                                                :
+                                        <View>
+                                            <View style={tripPlanStyles.moneyContainer}>
+                                                <Text style={tripPlanStyles.moneyText}>Total Budget: </Text>
                                                 <Text style={tripPlanStyles.numberText}>$ {this.state.totalBudget}</Text>
-                                            }
+                                            </View>
+                                            <View style={tripPlanStyles.moneyDefaultContainer}>
+                                                <Text style={tripPlanStyles.moneyDescriptions}>{this.state.totalBudgetText}</Text>
+                                            </View>
                                         </View>
 
                                         {/* Total Spending */}
-                                        <View style={this.state.totalSpending == 0 ? tripPlanStyles.moneyDefaultContainer : tripPlanStyles.moneyContainer}>
-                                                <Text style={tripPlanStyles.moneyText}>Total Spending: </Text>
-                                                {this.state.totalSpending == 0?
-                                                <Text style={tripPlanStyles.defaultNumberText}>Once you add a spending in a plan item, the Total Spending will be updated automatically.</Text>
-                                                :
-                                                <Text style={tripPlanStyles.numberText}>$ {this.state.totalBudget}</Text>
-                                                }
+                                        <View>
+                                            <View style={tripPlanStyles.moneyContainer}>
+                                                    <Text style={tripPlanStyles.moneyText}>Total Spending: </Text>
+                                                    <Text style={tripPlanStyles.numberText}>$ {this.state.totalSpending}</Text>
+                                            </View>
+                                            <View style={tripPlanStyles.moneyDefaultContainer}>
+                                                <Text style={tripPlanStyles.moneyDescriptions}>{this.state.totalSpendingText}</Text>
+                                            </View>
                                         </View>
 
                                         {/* MoneyLeft */}
-                                        <View style={this.state.moneyLeft == 0 ? tripPlanStyles.moneyDefaultContainer : tripPlanStyles.moneyContainer}>
-                                                <Text style={tripPlanStyles.moneyText}>Money Left: </Text>
-                                                {this.state.totalSpending == 0?
-                                                <Text style={tripPlanStyles.defaultNumberText}>Once you add a budget and spending in a plan item, the Money Left will be updated automatically.</Text>
-                                                :
-                                                <Text style={tripPlanStyles.numberText}>$ {this.state.moneyLeft}</Text>
-                                                }
+                                        <View>
+                                            <View style={tripPlanStyles.moneyContainer}>
+                                                    <Text style={tripPlanStyles.moneyText}>Money Left: </Text>
+                                                    <Text style={tripPlanStyles.numberText}>$ {this.state.moneyLeft}</Text>
+                                            </View>
+                                            <View style={tripPlanStyles.moneyDefaultContainer}>
+                                                <Text style={tripPlanStyles.moneyDescriptions}>{this.state.moneyLeftText}</Text>
+                                            </View>
                                         </View>
 
                                         {/* Notes */}
