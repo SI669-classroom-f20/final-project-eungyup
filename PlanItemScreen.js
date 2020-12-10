@@ -15,7 +15,7 @@ import { getDataModel } from './DataModel';
 import * as ImagePicker from 'expo-image-picker';
 // import Constants from 'expo-constants';
 // import { render } from 'react-dom';
-
+import Logo from './Logo'
 
 
 export class PlanItemScreen extends React.Component {
@@ -198,16 +198,11 @@ export class PlanItemScreen extends React.Component {
 
     render() {
         return (
-            <ScrollView style={planItemStyles.container}>
+            <View style={planItemStyles.container}>
                 {/* Top */}
-                <View style={planItemStyles.topView}>
-                    <Image
-                        source={require('./assets/logo.png')}
-                        style={planItemStyles.logoImage}
-                    />
-                </View>
+                <Logo/>
                 {/* Contetent */}
-                <View style={planItemStyles.contentView}>
+                <ScrollView style={planItemStyles.contentView}>
                     {/* PlanItem Information: PlanItem Title */}
                     <View style={planItemStyles.planItemInfoContainer}>
                         <Text style={planItemStyles.planItemInfoText}> Plan Title: </Text>
@@ -333,7 +328,7 @@ export class PlanItemScreen extends React.Component {
                             </View>
                         </View>
                     </View>
-                </View>
+
                 {/* BottomView */}
                 <View style={planItemStyles.bottomView}>
                     <View style={planItemStyles.cancelContainer}>
@@ -353,7 +348,8 @@ export class PlanItemScreen extends React.Component {
                         </TouchableOpacity>
                     </View>
                 </View>
-            </ScrollView>
+                </ScrollView>
+            </View>
         );
     }
 }

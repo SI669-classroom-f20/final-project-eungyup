@@ -1,8 +1,9 @@
 import React from 'react';
-import { TextInput, Text, View, Image, TouchableOpacity, KeyboardAvoidingView, Alert, LogBox } from 'react-native';
+import { TextInput, Text, View, Image, TouchableOpacity, KeyboardAvoidingView, ScrollView, Alert, LogBox } from 'react-native';
 
 import { loginStyles } from './Styles';
 import { getDataModel } from './DataModel';
+import Logo from './Logo'
 
 export class LoginScreen extends React.Component {
     constructor(props) {
@@ -75,104 +76,102 @@ export class LoginScreen extends React.Component {
 
     render() {
         return (
-            <KeyboardAvoidingView
-                style={loginStyles.container}
-                behavior={"height"}
-                keyboardVerticalOffset={10}>
+            // <KeyboardAvoidingView
+            //     style={loginStyles.container}
+            //     behavior={"height"}
+            //     keyboardVerticalOffset={10}>
+            <View>
                 {/* Top */}
-                <View style={loginStyles.topView}>
-                    <Image
-                        source={require('./assets/logo.png')}
-                        style={loginStyles.logoImage}
-                    />
-                </View>
+                <Logo/>
+                <ScrollView>
 
-                {/* Content */}
-                <View style={loginStyles.contentView}>
-                    <Text style={loginStyles.welcomeText}>Welcome</Text>
-                    <View style={loginStyles.inputRow}>
-                        <TextInput
-                            style={loginStyles.inputText}
-                            keyboardType='email-address'
-                            autoCapitalize='none'
-                            autoCorrect={false}
-                            autoCompleteType='email'
-                            textContentType='emailAddress'
-                            placeholder='Email Address'
-                            value={this.state.emailInput}
-                            onChangeText={(text)=>{this.setState({emailInput: text})}}
-                        />
-                    </View>
-                    <View style={loginStyles.inputRow}>
-                        <TextInput
-                            style={loginStyles.inputText}
-                            autoCapitalize='none'
-                            autoCorrect={false}
-                            textContentType='password'
-                            placeholder='Password'
-                            value={this.state.passwordInput}
-                            // for Android, need to make keyboardType={"default"} to use secureTextEntry = {true}
-                            keyboardType={"default"}
-                            secureTextEntry = {true}
-                            onChangeText={(text)=>{this.setState({passwordInput: text})}}
-                        />
-                    </View>
-                    {this.state.mode === 'create'? 
+                    {/* Content */}
+                    <View style={loginStyles.contentView}>
+                        <Text style={loginStyles.welcomeText}>Welcome</Text>
+                        <View style={loginStyles.inputRow}>
+                            <TextInput
+                                style={loginStyles.inputText}
+                                keyboardType='email-address'
+                                autoCapitalize='none'
+                                autoCorrect={false}
+                                autoCompleteType='email'
+                                textContentType='emailAddress'
+                                placeholder='Email Address'
+                                value={this.state.emailInput}
+                                onChangeText={(text)=>{this.setState({emailInput: text})}}
+                            />
+                        </View>
                         <View style={loginStyles.inputRow}>
                             <TextInput
                                 style={loginStyles.inputText}
                                 autoCapitalize='none'
                                 autoCorrect={false}
                                 textContentType='password'
-                                placeholder='Re-enter Password'
-                                value={this.state.passwordCheckInput}
+                                placeholder='Password'
+                                value={this.state.passwordInput}
                                 // for Android, need to make keyboardType={"default"} to use secureTextEntry = {true}
                                 keyboardType={"default"}
                                 secureTextEntry = {true}
-                                onChangeText={(text)=>{this.setState({passwordCheckInput: text})}}
+                                onChangeText={(text)=>{this.setState({passwordInput: text})}}
                             />
                         </View>
-                        :
-                    <View/>
-                    }
-                    {/* Bottom */}
-                    <View style={loginStyles.bottomView}>
-                    {this.state.mode === 'login'?
-                        <TouchableOpacity 
-                            style={loginStyles.buttonContainer}
-                            onPress={this.onLogin}
-                        >
-                            <Text style={loginStyles.buttonText}>Login</Text>
-                        </TouchableOpacity>
-                        :
-                        <TouchableOpacity
-                            style={loginStyles.buttonContainer}
-                            onPress={this.onCreateAccount}
-                        >
-                            <Text style={loginStyles.buttonText}>Create Account</Text>
-                        </TouchableOpacity>
-                    }
-                        <View style={loginStyles.bottomTextContainer}>
-                            <Text style={loginStyles.bottomQuestionText}>{this.state.mode === 'login'? "Don't have an account?" : "Already have an account"}</Text>
-                            {this.state.mode === 'login' ?
-                                <Text
-                                    style={loginStyles.bottomLinkText}
-                                    onPress={()=>{
-                                        this.setState({mode: 'create'})
-                                    }}
-                                    >Sign Up Here</Text>
+                        {this.state.mode === 'create'? 
+                            <View style={loginStyles.inputRow}>
+                                <TextInput
+                                    style={loginStyles.inputText}
+                                    autoCapitalize='none'
+                                    autoCorrect={false}
+                                    textContentType='password'
+                                    placeholder='Re-enter Password'
+                                    value={this.state.passwordCheckInput}
+                                    // for Android, need to make keyboardType={"default"} to use secureTextEntry = {true}
+                                    keyboardType={"default"}
+                                    secureTextEntry = {true}
+                                    onChangeText={(text)=>{this.setState({passwordCheckInput: text})}}
+                                />
+                            </View>
                             :
-                                <Text
-                                    style={loginStyles.bottomLinkText}
-                                    onPress={()=>{
-                                        this.setState({mode: 'login'})
-                                    }}
-                                >Login</Text>
-                            }
+                        <View/>
+                        }
+                        {/* Bottom */}
+                        <View style={loginStyles.bottomView}>
+                        {this.state.mode === 'login'?
+                            <TouchableOpacity 
+                                style={loginStyles.buttonContainer}
+                                onPress={this.onLogin}
+                            >
+                                <Text style={loginStyles.buttonText}>Login</Text>
+                            </TouchableOpacity>
+                            :
+                            <TouchableOpacity
+                                style={loginStyles.buttonContainer}
+                                onPress={this.onCreateAccount}
+                            >
+                                <Text style={loginStyles.buttonText}>Create Account</Text>
+                            </TouchableOpacity>
+                        }
+                            <View style={loginStyles.bottomTextContainer}>
+                                <Text style={loginStyles.bottomQuestionText}>{this.state.mode === 'login'? "Don't have an account?" : "Already have an account"}</Text>
+                                {this.state.mode === 'login' ?
+                                    <Text
+                                        style={loginStyles.bottomLinkText}
+                                        onPress={()=>{
+                                            this.setState({mode: 'create'})
+                                        }}
+                                        >Sign Up Here</Text>
+                                :
+                                    <Text
+                                        style={loginStyles.bottomLinkText}
+                                        onPress={()=>{
+                                            this.setState({mode: 'login'})
+                                        }}
+                                    >Login</Text>
+                                }
+                            </View>
                         </View>
                     </View>
+                    </ScrollView>
                 </View>
-            </KeyboardAvoidingView>
         )
     }
 }

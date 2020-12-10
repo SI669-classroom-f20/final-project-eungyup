@@ -15,7 +15,7 @@ import { getDataModel } from './DataModel';
 import * as ImagePicker from 'expo-image-picker';
 // import Constants from 'expo-constants';
 // import { render } from 'react-dom';
-
+import Logo from './Logo'
 
 
 export class TripPlanScreen extends React.Component {
@@ -416,6 +416,10 @@ export class TripPlanScreen extends React.Component {
     render() {
         return (
             <View style={tripPlanStyles.container}>
+
+                {/* Top */}
+                <Logo/>
+
                 {/*  Flatlist */}
                 <View style={tripPlanStyles.flatListContainer}>
                     <FlatList
@@ -424,13 +428,7 @@ export class TripPlanScreen extends React.Component {
                         // Header
                         ListHeaderComponent={
                             <View>
-                                {/* Top */}
-                                <View style={tripPlanStyles.topView}>
-                                    <Image
-                                        source={require('./assets/logo.png')}
-                                        style={tripPlanStyles.logoImage}
-                                    />
-                                </View>
+
 
                                 {/* Content */}
                                 <View style={tripPlanStyles.contentView}>

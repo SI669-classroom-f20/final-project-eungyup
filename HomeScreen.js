@@ -6,6 +6,7 @@ import { homeStyles, colors } from './Styles';
 import { getDataModel } from './DataModel';
 
 import { Colors } from 'react-native/Libraries/NewAppScreen';
+import Logo from './Logo'
 
 export class HomeScreen extends React.Component {
     constructor(props) {
@@ -147,6 +148,8 @@ export class HomeScreen extends React.Component {
         let onTripCount = 0;
         return (
             <View style={homeStyles.container}>
+                {/* Top */}
+                <Logo/>
                 {/*  Flatlist */}
                 <View style={homeStyles.flatListContainer}>
                     <FlatList
@@ -155,13 +158,6 @@ export class HomeScreen extends React.Component {
                         // Header
                         ListHeaderComponent={
                             <View style={homeStyles.test}>
-                                {/* Top */}
-                                <View style={homeStyles.topView}>
-                                    <Image
-                                        source={require('./assets/logo.png')}
-                                        style={homeStyles.logoImage}
-                                    />
-                                </View>
 
                                 {/* Content */}
                                 <View style={homeStyles.contentView}>

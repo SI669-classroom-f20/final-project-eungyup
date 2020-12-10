@@ -18,6 +18,22 @@ export const fontSizes = {
     extraLarge: 40,
 }
 
+export const logoStyles = StyleSheet.create({
+    topView: {
+        // flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
+        marginTop: 40,
+    },
+    logoImage: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 197,
+        height: 53,
+        resizeMode: 'contain'
+    },
+})
 
 export const loginStyles = StyleSheet.create({
     container: {
@@ -27,26 +43,12 @@ export const loginStyles = StyleSheet.create({
         justifyContent: 'center',
         // marginTop: Constants.statusBarHeight,
     },
-        topView: {
-            // flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: '100%',
-            marginTop: 40,
-        },
-        logoImage: {
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: 197,
-            height: 53,
-            resizeMode: 'contain'
-        },
         contentView: {
-            flex: 8,
+            flex: 9,
             justifyContent: 'center',
             alignItems: 'center',
             width: '100%',
-            marginTop: 20,
+            marginTop: 30,
         },
             welcomeText: {
                 fontSize: fontSizes.extraLarge,
@@ -120,29 +122,12 @@ export const homeStyles = StyleSheet.create({
         flex: 1,
         // fontSize: fontSizes.extraLarge,
     },
-    // test:{
-    //     flex: 1,
-    // },
-        topView: {
-            // flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: '100%',
-            marginTop: 40,
-        },
-        logoImage: {
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: 197,
-            height: 53,
-            resizeMode: 'contain'
-        },
         contentView: {
             flex: 9,
             // justifyContent: 'center',
             alignItems: 'center',
             width: '100%',
-            marginTop: 40,
+            marginTop: 30,
         },
             defaultBoxContainer: {
                 width: 300,
@@ -255,23 +240,9 @@ export const tripPlanStyles = StyleSheet.create({
         // flex: 7
     },
     flatListContainer:{
-        // flex: 3,
+        flex: 1,
         fontSize: fontSizes.extraLarge,
     },
-        topView: {
-            // flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: '100%',
-            marginTop: 40,
-        },
-        logoImage: {
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: 197,
-            height: 53,
-            resizeMode: 'contain',
-        },
         contentView: {
             flex: 9,
             // justifyContent: 'center',
@@ -550,22 +521,8 @@ export const planItemStyles = StyleSheet.create({
         // flex: 3,
         fontSize: fontSizes.extraLarge,
     },
-        topView: {
-            // flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: '100%',
-            marginTop: 40,
-        },
-        logoImage: {
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: 197,
-            height: 53,
-            resizeMode: 'contain',
-        },
         contentView: {
-            flex: 9,
+            flex: 1,
             // justifyContent: 'center',
             // alignItems: 'center',
             width: '100%',
