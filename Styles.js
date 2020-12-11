@@ -118,7 +118,7 @@ export const homeStyles = StyleSheet.create({
         justifyContent: 'center',
         // marginTop: Constants.statusBarHeight,
     },
-    flatListContainer:{
+    scrollListContainer:{
         flex: 1,
         // fontSize: fontSizes.extraLarge,
     },
@@ -178,7 +178,7 @@ export const homeStyles = StyleSheet.create({
                 elevation: 2,
             },
             mainBoxContainer: {
-                height: 300,
+                height: 277,
                 paddingTop: 25,
                 paddingHorizontal: 25,
                 // alignItems: 'center',

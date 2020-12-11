@@ -180,7 +180,7 @@ export class HomeScreen extends React.Component {
                 {/* Top */}
                 <Logo/>
                 {/*  Flatlist */}
-                <View style={homeStyles.flatListContainer}>
+                <View style={homeStyles.scrollListContainer}>
                     <SectionList
                         sections={this.state.DATA}
 
