@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TextInput, Text, View, Image, FlatList, TouchableOpacity, Alert, KeyboardAvoidingView, LogBox } from 'react-native';
+import { StyleSheet, TextInput, Text, View, Image, SectionList, FlatList, TouchableOpacity, Alert, KeyboardAvoidingView, LogBox } from 'react-native';
 import { Ionicons, MaterialIcons ,MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { homeStyles, colors } from './Styles';
@@ -35,9 +35,8 @@ export class HomeScreen extends React.Component {
             // user: this.props.route.params.currentUser,
             theList: [],
             theImage: require('./assets/ImageNotAvailable.png'),
-            onTripCount: 0,
-            upcomingCount: 0,
-            completedCount: 0,
+
+            DATA: [],
         }
 
         // (my) just ignore the warnign sign
@@ -69,11 +68,12 @@ export class HomeScreen extends React.Component {
         console.log('(home)this.userSpecificPlans', this.userSpecificPlans);
 
         if(this.userSpecificPlans){
-            let orderedByStatusList = this.orderListByStatus(this.userSpecificPlans);
+            this.orderListByStatus(this.userSpecificPlans);
+            // let orderedByStatusList = this.orderListByStatus(this.userSpecificPlans);
 
-            this.setState({theList: orderedByStatusList})
-            // this.setState({theList: this.userSpecificPlans});
-            console.log('(home) theList', this.state.theList);
+            // this.setState({theList: orderedByStatusList})
+            // // this.setState({theList: this.userSpecificPlans});
+            // console.log('(home) theList', this.state.theList);
         }
         // when there is no item after deleting => clean the list
         else{
@@ -117,9 +117,13 @@ export class HomeScreen extends React.Component {
     orderListByStatus = (userSpecificPlans) =>{
         let onTripList = [];
         let upcomingList = [];
-        let completed = [];
+        let completedList = [];
 
-        let combinedArray = [];
+        let onTripObj = {};
+        let upcomingObj = {};
+        let completedObj = {};
+
+        let newData = [];
 
         for(let plan of userSpecificPlans){
             // console.log('(Home orderListByStatus', plan);
@@ -130,35 +134,55 @@ export class HomeScreen extends React.Component {
                 upcomingList.push(plan);
             }
             if(plan.tripStatus == 'completed'){
-                completed.push(plan);
+                completedList.push(plan);
             }
             // console.log('(Home orderListByStatus onTripList', onTripList);
         }
 
-        combinedArray.push(...onTripList, ...upcomingList, ...completed);
-        console.log('(Home orderListByStatus combinedArray', combinedArray);
+        if(onTripList.length){
+            console.log('onTripList.length', onTripList.length);
+            onTripObj = {title: "On Trip", data: onTripList};
+            console.log('onTripObj', onTripObj);
 
-        return combinedArray;
+            newData.push(onTripObj);
+        }
+
+        if(upcomingList.length){
+            console.log('upcomingList.length', upcomingList.length);
+            upcomingObj = {title: "Upcoming Trip", data: upcomingList};
+            console.log('upcomingObj', upcomingObj);
+
+            newData.push(upcomingObj);
+        }
+
+        if(completedList.length){
+            console.log('completedList.length', completedList.length);
+            completedObj = {title: "Completed", data: completedList};
+            console.log('upcomingObj', upcomingObj);
+
+            newData.push(completedObj);
+        }
+
+        console.log('newData', newData);
+        this.setState({DATA: newData});
+
+        console.log('this.state.DATA', this.state.DATA);
+        // combinedArray.push(...onTripList, ...upcomingList, ...completed);
+        // console.log('(Home orderListByStatus combinedArray', combinedArray);
+
+        // return combinedArray;
     }
 
-    countNubmer = () => {
-        console.log('worked');
-        // let newNumber = countNubmer ++;
-        // this.setState({onTripCount: newNumber});
-        // return newNumber;
-        this.state.onTripCount = this.state.onTripCount + 1;
-    }
 
     render() {
-        let onTripCount = 0;
         return (
             <View style={homeStyles.container}>
                 {/* Top */}
                 <Logo/>
                 {/*  Flatlist */}
                 <View style={homeStyles.flatListContainer}>
-                    <FlatList
-                        data={this.state.theList}
+                    <SectionList
+                        sections={this.state.DATA}
 
                         // Header
                         ListHeaderComponent={
@@ -188,151 +212,13 @@ export class HomeScreen extends React.Component {
                                 </View>
                             </View>
                         }
+                        keyExtractor={(item, index) => item.tripTitle + index}
                         renderItem={({item}) => {
                             console.log('item', item);
                             console.log('item.tripStatus', item.tripStatus);
-                            console.log('this.state.onTripCount', this.state.onTripCount);
-                            console.log('this.state.upcomingCount', this.state.upcomingCount);
                             // console.log("on the top asjdlfkjsadlkfjlasjdfl˚å∆ß¬ƒ˚jlksa");
-                            // if(item.tripStatus == 'onTrip' && this.state.onTripCount == 0){
-                            //     return(
-                            //         <View >
-                            //             <Text>On Trip</Text>
-                            //         </View>
-                            //     )
-                            // }
-                            if(item.tripStatus == 'onTrip'){
-                                
                                 return(
                                     <View >
-                                        {onTripCount === 0? 
-                                        <Text>On Trip</Text>
-                                        :
-                                        <Text>Test</Text>
-
-                                    }
-                                        {/* Individual Tile */}
-                                        <View style={[homeStyles.defaultBoxContainer, homeStyles.mainBoxContainer]}>
-                                            <View style={item.imageURL ? homeStyles.pictureContainer : homeStyles.pictureDefualtContainer}>
-
-                                                {item.imageURL ?
-                                                    <Image
-                                                        source={{uri: item.imageURL}}
-                                                        style={homeStyles.imageStyle}
-                                                    />
-                                                :
-                                                    <Image
-                                                        source={this.state.theImage}
-                                                        style={homeStyles.imageDefaultStyle}
-                                                    />
-                                                }
-
-                                            </View>
-                                            <View style={homeStyles.tripTitleContainer}>
-                                                <Text style={homeStyles.tripTitleText}>{item.tripTitle}</Text>
-                                                <View style={homeStyles.editOrDeleteIconContainer}>
-                                                    <MaterialIcons name="edit"
-                                                        size={21}
-                                                        color={colors.primary}
-                                                        style={homeStyles.editIcon} 
-                                                        onPress={() => {this.onEdit(item)}}
-                                                        />
-                                                    <Ionicons name="md-trash" 
-                                                        size={21} 
-                                                        color={colors.primary}
-                                                        // Add Cancel Confirmation
-                                                        onPress={()=>{
-                                                        let tripTitle = item.tripTitle;
-                                                        Alert.alert(
-                                                            'Delete Item?',
-                                                            'Are you sure you want to delete "'+ tripTitle + '"?',
-                                                            [
-                                                            {text: "Cancel", style:"cancel"},
-                                                            {text: "Delete", onPress: ()=> this.onDelete(item.key)}
-                                                            ],
-                                                            {cancelable: false}
-                                                        )
-                                                        }} />
-                                                </View>
-                                            </View>
-                                            <View>
-                                                    <Text>{item.tripStartDateString} - {item.tripEndDateString}</Text>
-                                            </View>
-
-                                        </View>
-                                        {/* {onTripCount += 1} */}
-                                    </View>
-                                )
-                                onTripCount += 1;
-                            }
-                            // this.countNubmer();
-                            // onTripCount += 1;
-                            // this.setState({onTripCount: 1});
-
-
-
-                            if(item.tripStatus == 'upcoming'){
-                                return(
-                                    <View >
-                                        <Text>Upcoming Trip</Text>
-                                         {/* Individual Tile */}
-                                        <View style={[homeStyles.defaultBoxContainer, homeStyles.mainBoxContainer]}>
-                                            <View style={item.imageURL ? homeStyles.pictureContainer : homeStyles.pictureDefualtContainer}>
-
-                                                {item.imageURL ?
-                                                    <Image
-                                                        source={{uri: item.imageURL}}
-                                                        style={homeStyles.imageStyle}
-                                                    />
-                                                :
-                                                    <Image
-                                                        source={this.state.theImage}
-                                                        style={homeStyles.imageDefaultStyle}
-                                                    />
-                                                }
-
-                                            </View>
-                                            <View style={homeStyles.tripTitleContainer}>
-                                                <Text style={homeStyles.tripTitleText}>{item.tripTitle}</Text>
-                                                <View style={homeStyles.editOrDeleteIconContainer}>
-                                                    <MaterialIcons name="edit"
-                                                        size={21}
-                                                        color={colors.primary}
-                                                        style={homeStyles.editIcon} 
-                                                        onPress={() => {this.onEdit(item)}}
-                                                        />
-                                                    <Ionicons name="md-trash" 
-                                                        size={21} 
-                                                        color={colors.primary}
-                                                        // Add Cancel Confirmation
-                                                        onPress={()=>{
-                                                        let tripTitle = item.tripTitle;
-                                                        Alert.alert(
-                                                            'Delete Item?',
-                                                            'Are you sure you want to delete "'+ tripTitle + '"?',
-                                                            [
-                                                            {text: "Cancel", style:"cancel"},
-                                                            {text: "Delete", onPress: ()=> this.onDelete(item.key)}
-                                                            ],
-                                                            {cancelable: false}
-                                                        )
-                                                        }} />
-                                                </View>
-                                            </View>
-                                            <View>
-                                                    <Text>{item.tripStartDateString} - {item.tripEndDateString}</Text>
-                                            </View>
-
-                                        </View>
-                                    </View>
-                                )
-                            }
-
-
-                            if(item.tripStatus == 'completed'){
-                                return(
-                                    <View >
-                                        <Text>Completed</Text>
                                         {/* Individual Tile */}
                                         <View style={[homeStyles.defaultBoxContainer, homeStyles.mainBoxContainer]}>
                                             <View style={item.imageURL ? homeStyles.pictureContainer : homeStyles.pictureDefualtContainer}>
@@ -384,15 +270,19 @@ export class HomeScreen extends React.Component {
                                         </View>
                                     </View>
                                 )
-                            }
-                            // console.log("on the bottom asjdlfkjsadlkfjlasjdfl˚å∆ß¬ƒ˚jlksa");
-                            // this.state.onTripCount ++;
-                            // console.log("on the bottom asjdlfkjsadlkfjlasjdfl˚å∆ß¬ƒ˚jlksa");
-                            // this.setState({onTripCount: 1});
-
                         }
-                    
                     }
+                    renderSectionHeader={({ section: { title } }) => (
+                        <View>
+                            <View style={homeStyles.separator}/>
+                            <View style={homeStyles.headerContainer}>
+                                <Text style={homeStyles.headerText}>{title}</Text>
+                            </View>
+                        </View>
+                    )}
+                    // ItemSeparatorComponent={()=>(
+                    //     <View style={homeStyles.separator}/>
+                    // )}
                     />
                 </View>
 

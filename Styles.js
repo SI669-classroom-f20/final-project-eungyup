@@ -122,6 +122,38 @@ export const homeStyles = StyleSheet.create({
         flex: 1,
         // fontSize: fontSizes.extraLarge,
     },
+    separator: {
+        width: '90%',
+        alignSelf: 'center',
+        // height: 5,
+        borderBottomWidth: 2,
+        borderColor: colors.outline,
+        marginTop: 20,
+        marginBottom: 30,
+
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+
+        // Box shadow for Android
+        elevation: 2,
+    },
+    headerContainer:{
+        marginBottom: 15,
+        // borderTopWidth: 5,
+        // borderColor: colors.primary
+        // width: '80%',
+        // backgroundColor: colors.primary
+    },
+        headerText: {
+            fontSize: fontSizes.large,
+            fontWeight: 'bold',
+            // paddingBottom: 10,
+        },
         contentView: {
             flex: 9,
             // justifyContent: 'center',
