@@ -289,7 +289,7 @@ export class PlanItemScreen extends React.Component {
                                 maxLength={6}
                                 value={this.state.itemBudget}
                                 // for Android, need to make keyboardType={"default"} to use secureTextEntry = {true}
-                                keyboardType={"default"}
+                                keyboardType={"decimal-pad"}
                                 onChangeText={(text)=>{this.setState({itemBudget: text})}}
                             />
                         </View>
@@ -304,7 +304,7 @@ export class PlanItemScreen extends React.Component {
                                 maxLength={6}
                                 value={this.state.itemSpending}
                                 // for Android, need to make keyboardType={"default"} to use secureTextEntry = {true}
-                                keyboardType={"default"}
+                                keyboardType={"decimal-pad"}
                                 onChangeText={(text)=>{this.setState({itemSpending: text})}}
                             />
                         </View>

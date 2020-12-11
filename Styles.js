@@ -660,7 +660,7 @@ export const planItemStyles = StyleSheet.create({
                     marginBottom: 15,
                     marginLeft: 5,
                     flexDirection: 'row',
-                    // alignItems: 'center',
+                    alignItems: 'center',
                 },
                     moneyText: {
                         fontSize: fontSizes.regular,
