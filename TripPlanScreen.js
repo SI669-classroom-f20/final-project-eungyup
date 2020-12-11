@@ -262,19 +262,17 @@ export class TripPlanScreen extends React.Component {
         // console.log('new Date()', new Date());
         // console.log('new Date()', typeof(new Date()));
         console.log(selectedDate);
-        this.setState({tripStartDateString: moment(selectedDate).format('MM/DD/YYYY'), tripStartDate: selectedDate, tripStartShow: false});
-        // console.log('format timestamp', moment(selectedDate).unix());
-        // let timeStampNumber = Number(moment(selectedDate).unix()));
-        // let timeStamp = moment(selectedDate).unix();
-        // console.log('type of timestamp', typeof(timeStamp));
-        // let totalSumOfTimeStamp = 0;
-        // for (let num in String(timeStamp)){
-        //     totalSumOfTimeStamp += Number(num)
-        // }
 
-        // // this.setState({testTimeStamp: moment(selectedDate).unix()});
-        // this.setState({testTimeStamp: totalSumOfTimeStamp});
-        // console.log('this.state.testTimeStamp: ', this.state.testTimeStamp)
+        this.setState(
+            {
+                tripStartDateString: moment(selectedDate).format('MM/DD/YYYY'), 
+                tripStartDate: selectedDate, 
+                tripStartShow: false,
+                // Because the end date should be on or after the startdate, set the end date to match the start dates as well
+                tripEndDateString: moment(selectedDate).format('MM/DD/YYYY'), 
+                tripEndDate: selectedDate, 
+                tripEndShow: false
+            });
     }
 
     onChangeEndDate = (event, selectedDate) => {
