@@ -75,6 +75,11 @@ export class HomeScreen extends React.Component {
             // this.setState({theList: this.userSpecificPlans});
             console.log('(home) theList', this.state.theList);
         }
+        // when there is no item after deleting => clean the list
+        else{
+            let aCleanList = []
+            this.setState({theList: aCleanList});
+        }
     }
 
     // (my) added async to add/update data first then get plans in the this.subscribeToPlan()

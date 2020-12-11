@@ -80,7 +80,7 @@ export class LoginScreen extends React.Component {
             //     style={loginStyles.container}
             //     behavior={"height"}
             //     keyboardVerticalOffset={10}>
-            <View>
+            <View style={loginStyles.container}>
                 {/* Top */}
                 <Logo/>
                 <ScrollView>
