@@ -411,9 +411,8 @@ export class TripPlanScreen extends React.Component {
 
     onDeletePicture = () =>{
         console.log('(Trip Plan) onDeletePicture working');
-        let emptyImageURL = null;
 
-        this.setState({imageURL: emptyImageURL, image: null});
+        this.setState({imageURL: null, image: null});
     }
 
 
