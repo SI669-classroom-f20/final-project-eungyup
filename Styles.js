@@ -48,7 +48,7 @@ export const loginStyles = StyleSheet.create({
             justifyContent: 'center',
             alignItems: 'center',
             width: '100%',
-            marginTop: 30,
+            marginTop: 40,
         },
             welcomeText: {
                 fontSize: fontSizes.extraLarge,
@@ -84,7 +84,7 @@ export const loginStyles = StyleSheet.create({
                     backgroundColor: colors.primary,
                     width: '73%',
                     height: 47,
-                    marginTop: 50,
+                    marginTop: 40,
                     marginBottom: 30,
                 },
                     buttonText: {
@@ -159,7 +159,7 @@ export const homeStyles = StyleSheet.create({
             // justifyContent: 'center',
             alignItems: 'center',
             width: '100%',
-            marginTop: 30,
+            marginTop: 40,
         },
             defaultBoxContainer: {
                 width: 300,

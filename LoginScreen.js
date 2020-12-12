@@ -151,7 +151,7 @@ export class LoginScreen extends React.Component {
                             </TouchableOpacity>
                         }
                             <View style={loginStyles.bottomTextContainer}>
-                                <Text style={loginStyles.bottomQuestionText}>{this.state.mode === 'login'? "Don't have an account?" : "Already have an account"}</Text>
+                                <Text style={loginStyles.bottomQuestionText}>{this.state.mode === 'login'? "Don't have an account?" : "Already have an account?"}</Text>
                                 {this.state.mode === 'login' ?
                                 <TouchableOpacity
                                     onPress={()=>{
