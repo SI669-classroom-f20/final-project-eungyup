@@ -153,19 +153,21 @@ export class LoginScreen extends React.Component {
                             <View style={loginStyles.bottomTextContainer}>
                                 <Text style={loginStyles.bottomQuestionText}>{this.state.mode === 'login'? "Don't have an account?" : "Already have an account"}</Text>
                                 {this.state.mode === 'login' ?
-                                    <Text
-                                        style={loginStyles.bottomLinkText}
-                                        onPress={()=>{
-                                            this.setState({mode: 'create'})
-                                        }}
-                                        >Sign Up Here</Text>
+                                <TouchableOpacity
+                                    onPress={()=>{
+                                        this.setState({mode: 'create'})
+                                    }}
+                                >
+                                    <Text style={loginStyles.bottomLinkText}>Sign Up Here</Text>
+                                </TouchableOpacity>
                                 :
-                                    <Text
-                                        style={loginStyles.bottomLinkText}
-                                        onPress={()=>{
-                                            this.setState({mode: 'login'})
-                                        }}
-                                    >Login</Text>
+                                <TouchableOpacity
+                                    onPress={()=>{
+                                        this.setState({mode: 'login'})
+                                    }}
+                                >
+                                    <Text style={loginStyles.bottomLinkText}>Login</Text>
+                                </TouchableOpacity>
                                 }
                             </View>
                         </View>

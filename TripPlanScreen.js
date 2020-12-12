@@ -660,29 +660,35 @@ export class TripPlanScreen extends React.Component {
                                     <View style={tripPlanStyles.flatRenderItemContainer}>
                                         <FontAwesome name="circle" size={40} color={colors.primary} />
                                         <Text style={tripPlanStyles.flatRenderText}>{item.itemTitle}</Text>
-
-                                        <MaterialIcons name="edit"
-                                            size={21}
-                                            color={colors.primary}
-                                            style={tripPlanStyles.editIcon}
+                                        <TouchableOpacity
                                             onPress={() => {this.onEdit(item)}}
-                                            />
-                                        <Ionicons name="md-trash"
-                                            size={21}
-                                            color={colors.primary}
+                                        >
+                                            <MaterialIcons name="edit"
+                                                size={21}
+                                                color={colors.primary}
+                                                style={tripPlanStyles.editIcon}
+                                                />
+                                        </TouchableOpacity>
+                                        <TouchableOpacity
                                             // Add Cancel Confirmation
                                             onPress={()=>{
-                                            let itemTitle = item.itemTitle;
-                                            Alert.alert(
-                                                'Delete Item?',
-                                                'Are you sure you want to delete "'+ itemTitle + '"?',
-                                                [
-                                                {text: "Cancel", style:"cancel"},
-                                                {text: "Delete", onPress: ()=> this.onDelete(item.itemKey)}
-                                                ],
-                                                {cancelable: false}
-                                            )
-                                            }} />
+                                                let itemTitle = item.itemTitle;
+                                                Alert.alert(
+                                                    'Delete Item?',
+                                                    'Are you sure you want to delete "'+ itemTitle + '"?',
+                                                    [
+                                                    {text: "Cancel", style:"cancel"},
+                                                    {text: "Delete", onPress: ()=> this.onDelete(item.itemKey)}
+                                                    ],
+                                                    {cancelable: false}
+                                                )
+                                                }}
+                                        >
+                                            <Ionicons name="md-trash"
+                                                size={21}
+                                                color={colors.primary}
+                                                />
+                                            </TouchableOpacity>
                                     </View>
                                     {/* Vertical Line */}
                                     <View style={tripPlanStyles.flatRenderItemVerticalLine}/>

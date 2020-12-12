@@ -239,28 +239,34 @@ export class HomeScreen extends React.Component {
                                             <View style={homeStyles.tripTitleContainer}>
                                                 <Text style={homeStyles.tripTitleText}>{item.tripTitle}</Text>
                                                 <View style={homeStyles.editOrDeleteIconContainer}>
-                                                    <MaterialIcons name="edit"
-                                                        size={21}
-                                                        color={colors.primary}
-                                                        style={homeStyles.editIcon} 
+                                                    <TouchableOpacity
                                                         onPress={() => {this.onEdit(item)}}
-                                                        />
-                                                    <Ionicons name="md-trash" 
-                                                        size={21} 
-                                                        color={colors.primary}
+                                                    >
+                                                        <MaterialIcons name="edit"
+                                                            size={21}
+                                                            color={colors.primary}
+                                                            style={homeStyles.editIcon}
+                                                            />
+                                                    </TouchableOpacity>
+                                                    <TouchableOpacity
                                                         // Add Cancel Confirmation
                                                         onPress={()=>{
-                                                        let tripTitle = item.tripTitle;
-                                                        Alert.alert(
-                                                            'Delete Item?',
-                                                            'Are you sure you want to delete "'+ tripTitle + '"?',
-                                                            [
-                                                            {text: "Cancel", style:"cancel"},
-                                                            {text: "Delete", onPress: ()=> this.onDelete(item.key)}
-                                                            ],
-                                                            {cancelable: false}
-                                                        )
-                                                        }} />
+                                                            let tripTitle = item.tripTitle;
+                                                            Alert.alert(
+                                                                'Delete Item?',
+                                                                'Are you sure you want to delete "'+ tripTitle + '"?',
+                                                                [
+                                                                {text: "Cancel", style:"cancel"},
+                                                                {text: "Delete", onPress: ()=> this.onDelete(item.key)}
+                                                                ],
+                                                                {cancelable: false}
+                                                            )
+                                                            }}
+                                                    >
+                                                        <Ionicons name="md-trash" 
+                                                            size={21} 
+                                                            color={colors.primary} />
+                                                        </TouchableOpacity>
                                                 </View>
                                             </View>
                                             <View>
