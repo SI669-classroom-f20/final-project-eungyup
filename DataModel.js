@@ -68,7 +68,7 @@ class DataModel {
 
     loadPlans = async () => {
         console.log('(DataModel.js loadPlans()');
-        let querySnap = await this.plansRef.orderBy('tripStartDate').get();
+        let querySnap = await this.plansRef.orderBy('tripStartDate','desc').get();
         // (my check) I may not need async below
         querySnap.forEach(async qDocSnap => {
             let data = qDocSnap.data();
@@ -91,6 +91,7 @@ class DataModel {
             // this.plans.push(thisPlan);
             // console.log('trip: ', this.trips)
         });
+        console.log('DataModel.js loadPlans this.plans', this.plans)
     }
 
     getPlans = async (userId) => {

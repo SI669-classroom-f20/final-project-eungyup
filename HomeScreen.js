@@ -63,7 +63,7 @@ export class HomeScreen extends React.Component {
     subscribeToPlan = async() => {
         // userSpecificPlans is an array with plans objects related to the user
         // first clear the theList (otherwise get duplicate lists)
-        this.state.theList = [];
+        this.state.DATA = [];
         this.userSpecificPlans = await this.dataModel.getPlans(this.userId);
         console.log('(home)this.userSpecificPlans', this.userSpecificPlans);
 
@@ -78,7 +78,7 @@ export class HomeScreen extends React.Component {
         // when there is no item after deleting => clean the list
         else{
             let aCleanList = []
-            this.setState({theList: aCleanList});
+            this.setState({DATA: aCleanList});
         }
     }
 
