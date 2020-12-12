@@ -409,6 +409,12 @@ export class TripPlanScreen extends React.Component {
         this.deleteItem(itemKey);
     }
 
+    onDeletePicture = () =>{
+        console.log('(Trip Plan) onDeletePicture working');
+        let emptyImageURL = null;
+
+        this.setState({imageURL: emptyImageURL, image: null});
+    }
 
 
     render() {
@@ -607,10 +613,45 @@ export class TripPlanScreen extends React.Component {
 
                                         {/* Picture */}
                                         <View style={tripPlanStyles.pictureContainer}>
-                                            <Text style={tripPlanStyles.pictureText}>Picture: </Text>
-                                            {/* <Button title="Pick an image from camera roll" onPress={this.pickImage} /> */}
-
-                                            {this.props.route.params.operation === 'edit' && this.props.route.params.item.imageURL?
+                                        {this.props.route.params.operation === 'edit' && this.props.route.params.item.imageURL || this.state.image?
+                                            <View style={tripPlanStyles.editOrDeleteIconContainer}>
+                                                <Text style={tripPlanStyles.pictureText}>Picture: </Text>
+                                                {/* <Button title="Pick an image from camera roll" onPress={this.pickImage} /> */}
+                                                <View style={tripPlanStyles.editOrDeleteIconContainer}>
+                                                            <TouchableOpacity
+                                                                onPress={this.pickImage}
+                                                            >
+                                                                <MaterialIcons name="edit"
+                                                                    size={21}
+                                                                    color={colors.primary}
+                                                                    style={tripPlanStyles.editIcon}
+                                                                    />
+                                                            </TouchableOpacity>
+                                                            <TouchableOpacity
+                                                                onPress={()=>{
+                                                                    // let tripTitle = item.tripTitle;
+                                                                    Alert.alert(
+                                                                        'Delete Picture',
+                                                                        'Are you sure you want to delete the picture?',
+                                                                        [
+                                                                            { text: 'Cancel', style: 'cancel' },
+                                                                            { text: "Delete", onPress: ()=> this.onDeletePicture()}
+                                                                        ]
+                                                                    );
+                                                                    }}
+                                                            >
+                                                                <Ionicons name="md-trash" 
+                                                                    size={21} 
+                                                                    color={colors.primary} />
+                                                            </TouchableOpacity>
+                                                </View>
+                                            </View>
+                                            :
+                                            <View>
+                                                <Text style={tripPlanStyles.pictureText}>Picture: </Text>
+                                            </View>
+                                        }
+                                            {this.props.route.params.operation === 'edit' && this.state.imageURL?
                                                 <View style={tripPlanStyles.imageContainer}>
                                                     {/* width and height below is configued the image that was taken */}
                                                         <Image source={{uri: this.state.imageURL}}

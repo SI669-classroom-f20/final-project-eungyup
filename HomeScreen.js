@@ -266,7 +266,7 @@ export class HomeScreen extends React.Component {
                                                         <Ionicons name="md-trash" 
                                                             size={21} 
                                                             color={colors.primary} />
-                                                        </TouchableOpacity>
+                                                    </TouchableOpacity>
                                                 </View>
                                             </View>
                                             <View>

@@ -416,7 +416,14 @@ export const tripPlanStyles = StyleSheet.create({
                         pictureText: {
                             fontSize: fontSizes.regular,
                             paddingBottom: 5,
+                            paddingRight: 110,
                         },
+                            editOrDeleteIconContainer:{
+                                flexDirection: 'row',
+                            },
+                                editIcon: {
+                                    paddingRight: 10,
+                                },
                         imageDefaultParentContainer: {
                             // Because the "aspect: [4:3]" in the "picImage" method in the TripPlan Screen,
                             // -> make it 
