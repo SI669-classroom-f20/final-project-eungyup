@@ -243,6 +243,11 @@ export class TripPlanScreen extends React.Component {
             }
         }
 
+        if(theBudget !== 0 && Number(theSpending) === 0){
+            theMoneyLeft = Number(theBudget);
+            console.log('(TripPlan) calcurateMoney theMoneyLeft:', theMoneyLeft);
+        }
+
         if(theBudget !== 0 && theSpending !==0){
             theMoneyLeft = Number(theBudget - theSpending);
             console.log('(TripPlan) calcurateMoney theMoneyLeft:', theMoneyLeft);
