@@ -40,8 +40,8 @@ export class PlanItemScreen extends React.Component {
         let initItemEndDate = this.props.date || new Date();
         let initItemEndShow = false;
 
-        let initItemBudget = null;
-        let initItemSpending = null;
+        let initItemBudget = 0;
+        let initItemSpending = 0;
 
         let initItemNotes = '';
 
@@ -284,7 +284,7 @@ export class PlanItemScreen extends React.Component {
                                 autoCorrect={false}
                                 // placeholder='Type your budget'
                                 maxLength={6}
-                                value={this.state.itemBudget}
+                                value={String(this.state.itemBudget)}
                                 // for Android, need to make keyboardType={"default"} to use secureTextEntry = {true}
                                 keyboardType={"decimal-pad"}
                                 onChangeText={(text)=>{this.setState({itemBudget: text})}}
@@ -299,7 +299,7 @@ export class PlanItemScreen extends React.Component {
                                 autoCorrect={false}
                                 // placeholder='Type your spending'
                                 maxLength={6}
-                                value={this.state.itemSpending}
+                                value={String(this.state.itemSpending)}
                                 // for Android, need to make keyboardType={"default"} to use secureTextEntry = {true}
                                 keyboardType={"decimal-pad"}
                                 onChangeText={(text)=>{this.setState({itemSpending: text})}}
