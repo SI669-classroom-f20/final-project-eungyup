@@ -1,14 +1,9 @@
 import { StyleSheet } from 'react-native';
-import { color } from 'react-native-reanimated';
-
-// For top status bar styles
-import Constants from "expo-constants";
 
 export const colors = {
-    primary: '#3D90E3', 
-    primaryDark: '#2B7EB2', // MD Brown 300
-    // primaryLight: '#E8EAF6', // MD Amber 200
-    outline: '#828282' // MD Gray 400
+    primary: '#3D90E3',
+    primaryDark: '#2B7EB2',
+    outline: '#828282',
 }
 
 export const fontSizes = {
@@ -20,7 +15,6 @@ export const fontSizes = {
 
 export const logoStyles = StyleSheet.create({
     topView: {
-        // flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
         width: '100%',
@@ -39,9 +33,6 @@ export const loginStyles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        // alignItems: 'center',
-        // justifyContent: 'center',
-        // marginTop: Constants.statusBarHeight,
     },
         contentView: {
             flex: 9,
@@ -71,7 +62,6 @@ export const loginStyles = StyleSheet.create({
             },
             bottomView: {
                 flex: 2.5,
-                // flexDirection: 'column',
                 width: '100%',
                 alignItems: 'center'
             },
@@ -116,16 +106,13 @@ export const homeStyles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
-        // marginTop: Constants.statusBarHeight,
     },
     scrollListContainer:{
         flex: 1,
-        // fontSize: fontSizes.extraLarge,
     },
     separator: {
         width: '90%',
         alignSelf: 'center',
-        // height: 5,
         borderBottomWidth: 2,
         borderColor: colors.outline,
         marginTop: 20,
@@ -139,24 +126,18 @@ export const homeStyles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
 
-        // Box shadow for Android
+        // box shadow for Android
         elevation: 2,
     },
     headerContainer:{
         marginBottom: 15,
-        // borderTopWidth: 5,
-        // borderColor: colors.primary
-        // width: '80%',
-        // backgroundColor: colors.primary
     },
         headerText: {
             fontSize: fontSizes.large,
             fontWeight: 'bold',
-            // paddingBottom: 10,
         },
         contentView: {
             flex: 9,
-            // justifyContent: 'center',
             alignItems: 'center',
             width: '100%',
             marginTop: 40,
@@ -174,14 +155,13 @@ export const homeStyles = StyleSheet.create({
                 shadowOpacity: 0.25,
                 shadowRadius: 3.84,
 
-                // Box shadow for Android
+                // box shadow for Android
                 elevation: 2,
             },
             mainBoxContainer: {
                 height: 277,
                 paddingTop: 25,
                 paddingHorizontal: 25,
-                // alignItems: 'center',
             },
                 defaultExplain:{
                     justifyContent: 'center',
@@ -210,20 +190,14 @@ export const homeStyles = StyleSheet.create({
                 pictureContainer: {
                     width: 240,
                     height: 180,
-                    // justifyContent: 'center',
-                    // alignItems: 'center',
-                    // borderWidth: 0.2,
                     borderRadius: 8,
                     alignSelf: 'center'
                 },
                 imageDefaultStyle: {
                         flex: 1,
                         justifyContent: 'center',
-                        // Because the "aspect: [4:3]" in the "picImage" method in the TripPlan Screen,
-                        // -> make it 
-                        // width: 240,
-                        // height: 180,
-                        // (4:3)
+                        // Because of the "aspect: [4:3]" in the "picImage" method in the TripPlan Screen,
+                        // make it about (4:3)
                         width: 238,
                         height: 180,
                         resizeMode: 'contain',
@@ -231,15 +205,11 @@ export const homeStyles = StyleSheet.create({
                     imageStyle: {
                         flex: 1,
                         justifyContent: 'center',
-                        // Because the "aspect: [4:3]" in the "picImage" method in the TripPlan Screen,
-                        // -> make it 
-                        // width: 240,
-                        // height: 180,
-                        // (4:3)
+                        // Because of the "aspect: [4:3]" in the "picImage" method in the TripPlan Screen,
+                        // make it about (4:3)
                         width: 238,
                         height: 180,
                         resizeMode: 'contain',
-                        // borderWidth: 1,
                         borderRadius: 8,
                     },
                 tripTitleContainer: {
@@ -262,14 +232,10 @@ export const tripPlanStyles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        // alignItems: 'center',
         justifyContent: 'center',
-        // marginTop: Constants.statusBarHeight,
     },
     scrollViewTest:{
         backgroundColor: 'cornsilk',
-        // height: 1000,
-        // flex: 7
     },
     flatListContainer:{
         flex: 1,
@@ -277,8 +243,6 @@ export const tripPlanStyles = StyleSheet.create({
     },
         contentView: {
             flex: 9,
-            // justifyContent: 'center',
-            // alignItems: 'center',
             width: '100%',
             marginTop: 30,
         },
@@ -296,7 +260,6 @@ export const tripPlanStyles = StyleSheet.create({
                     paddingLeft: 5,
                     fontSize: fontSizes.regular,
                     borderBottomWidth: 1,
-                    // padding: 10,
                 },
             tripStatusContainer: {
                 paddingLeft: 25,
@@ -349,8 +312,6 @@ export const tripPlanStyles = StyleSheet.create({
                             borderWidth: 1,
                             borderColor: '#CAD3DF',
                             borderRadius: 5,
-                            // marginVertical: 10,
-                            // marginHorizontal: 10,
                             paddingRight: 10,
                             height: 40,
                         },
@@ -360,7 +321,6 @@ export const tripPlanStyles = StyleSheet.create({
                                 marginHorizontal: 10,
                             },
                             textStyle: {
-                            //   fontFamily: 'Gill Sans',
                                 fontSize: fontSizes.regular,
                                 marginHorizontal: 10,
                             },
@@ -399,7 +359,6 @@ export const tripPlanStyles = StyleSheet.create({
                     },
                         notesInputText: {
                             flex: 0.7,
-                            // width: 250,
                             height: 180,
                             width: 300,
                             borderColor: colors.outline,
@@ -425,43 +384,32 @@ export const tripPlanStyles = StyleSheet.create({
                                     paddingRight: 10,
                                 },
                         imageDefaultParentContainer: {
-                            // Because the "aspect: [4:3]" in the "picImage" method in the TripPlan Screen,
-                            // -> make it 
-                            // width: 240,
-                            // height: 180,
-                            // (4:3)
+                            // Because of the "aspect: [4:3]" in the "picImage" method in the TripPlan Screen,
+                            // make it about (4:3)
                             width: 240,
                             height: 180,
                             borderWidth: 0.6,
                             borderRadius: 8,
                             color: colors.outline,
                             padding: 0,
-                            // alignItems: 'flex-start',
                         },
                         imageContainer: {
-                            // Because the "aspect: [4:3]" in the "picImage" method in the TripPlan Screen,
-                            // -> make it
-                            // width: 240,
-                            // height: 180,
-                            // (4:3)
+                            // Because of the "aspect: [4:3]" in the "picImage" method in the TripPlan Screen,
+                            // make it about (4:3)
                             width: 240,
                             height: 180,
                         },
                             imageStyle: {
                                 flex: 1,
                                 justifyContent: 'flex-start',
-                                // Because the "aspect: [4:3]" in the "picImage" method in the TripPlan Screen,
-                                // -> make it 
-                                // width: 240,
-                                // height: 180,
-                                // (4:3)
+                                // Because of the "aspect: [4:3]" in the "picImage" method in the TripPlan Screen,
+                                // make it about (4:3)
                                 width: 240,
                                 height: 180,
                                 resizeMode: 'contain',
                                 borderWidth: 1,
                                 borderRadius: 8,
                             },
-
                             imageDefaultContainer: {
                                 alignItems: 'center',
                             },
@@ -554,16 +502,12 @@ export const planItemStyles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        // marginTop: Constants.statusBarHeight,
     },
     flatListContainer:{
-        // flex: 3,
         fontSize: fontSizes.extraLarge,
     },
         contentView: {
             flex: 1,
-            // justifyContent: 'center',
-            // alignItems: 'center',
             width: '100%',
             marginTop: 30,
         },
@@ -581,7 +525,6 @@ export const planItemStyles = StyleSheet.create({
                     paddingLeft: 5,
                     fontSize: fontSizes.regular,
                     borderBottomWidth: 1,
-                    // padding: 10,
                 },
                 inputText: {
                     flex: 0.25,
@@ -589,7 +532,6 @@ export const planItemStyles = StyleSheet.create({
                     paddingLeft: 5,
                     fontSize: fontSizes.regular,
                     borderBottomWidth: 1,
-                    // padding: 10,
                 },
                 planItemHeaderText: {
                     fontSize: fontSizes.large,
@@ -641,8 +583,6 @@ export const planItemStyles = StyleSheet.create({
                             borderWidth: 1,
                             borderColor: '#CAD3DF',
                             borderRadius: 5,
-                            // marginVertical: 10,
-                            // marginHorizontal: 10,
                             paddingRight: 10,
                             height: 40,
                         },
@@ -652,7 +592,6 @@ export const planItemStyles = StyleSheet.create({
                                 marginHorizontal: 10,
                             },
                             textStyle: {
-                            //   fontFamily: 'Gill Sans',
                                 fontSize: fontSizes.regular,
                                 marginHorizontal: 10,
                             },
@@ -683,7 +622,6 @@ export const planItemStyles = StyleSheet.create({
                         paddingLeft: 5,
                     },
                     notesContainer: {
-                        // marginTop: 12,
                         marginLeft: 5,
                     },
                     notesText: {
@@ -692,7 +630,6 @@ export const planItemStyles = StyleSheet.create({
                     },
                         notesInputText: {
                             flex: 0.7,
-                            // width: 250,
                             height: 180,
                             width: 300,
                             borderColor: colors.outline,

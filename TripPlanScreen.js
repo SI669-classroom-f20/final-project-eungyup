@@ -2,14 +2,14 @@ import React from 'react';
 import { View, Text, TextInput, Image, FlatList, TouchableOpacity, Alert, LogBox} from 'react-native';
 import { FontAwesome ,FontAwesome5, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { RadioButton } from 'react-native-paper';
-// For Date Picker
+// for date picker
 import DateTimePicker from '@react-native-community/datetimepicker'
 import moment from "moment";
 
 import { tripPlanStyles, colors } from './Styles';
 
 import { getDataModel } from './DataModel';
-// for Picture
+// for picture
 import * as ImagePicker from 'expo-image-picker';
 
 import Logo from './Logo'
@@ -23,21 +23,21 @@ export class TripPlanScreen extends React.Component {
         // local dataModel
         this.dataModel = getDataModel();
 
-        // Initial setup
+        // initial setup
         let userId = '';
         let initTripTitle = '';
         let initTripCategory = '';
         let initTripStatus = 'upcoming';
 
-        // For Start Date
+        // for start date
         let initTripStartDateString = moment(new Date()).format('MM/DD/YYYY');
-        // (my) For Android, I may not need this.props.date
+        // for Android, may not need this.props.date
         let initTripStartDate = this.props.date || new Date();
         let initTripStartShow = false;
 
-        // For End Date
+        // for end date
         let initTripEndDateString = moment(new Date()).format('MM/DD/YYYY');
-        // (my) For Android, I may not need this.props.date
+        // for Android, may not need this.props.date
         let initTripEndDate = this.props.date || new Date();
         let initTtripEndShow = false;
 
@@ -53,45 +53,29 @@ export class TripPlanScreen extends React.Component {
 
         if (this.props.route.params){
             this.operation = this.props.route.params.operation;
-            console.log('(TripPlan) this.operation', this.operation);
 
-            // This is for "add" from Home
+            // this is for "add" from Home
             userId = this.props.route.params.userId;
-            console.log('(TripPlan) add userId', userId);
 
-            // This is for "edit" from Home
+            // this is for "edit" from Home
             if(this.props.route.params.operation === 'edit') {
-                // console.log('(TripPlan) worked');
-                console.log('(TripPlan) edit item', this.props.route.params.item)
-
                 userId = this.props.route.params.item.userId;
-                console.log('(TripPlan) edit userId', userId);
                 initTripTitle = this.props.route.params.item.tripTitle;
                 initTripCategory = this.props.route.params.item.tripCategory;
                 initTripStatus = this.props.route.params.item.tripStatus;
-        
-                // For Start Date
 
+                // for start date
                 initTripStartDateString = this.props.route.params.item.tripStartDateString;
+                // due to complicated format, don't get tripStartDate (just use the default above is sufficient)
 
-                // (my) due to complicated format, I don't get tripStartDate (just use the default above is sufficient)
-                // initTripStartDate = this.props.route.params.item.tripStartDate;
-                // Since I should not store tripStartShow (open and close calendar) in the firebase and local model don't inculude this
-                // let initTripStartShow = false;
-        
-                // For End Date
-
+                // for end date
                 initTripEndDateString = this.props.route.params.item.tripEndDateString;
+                // due to complicated format, don't get tripStartDate (just use the default above is sufficient)
 
-                // (my) due to complicated format, I don't get tripStartDate (just use the default above is sufficient)
-                // initTripEndDate = this.props.route.params.item.tripEndDate;
-                // Since I should not store tripEndShow (open and close calendar) in the firebase and local model don't inculude this
-                // let initTtripEndShow = false;
-        
                 initTotalBudget = this.props.route.params.item.totalBudget;
                 initTotalSpending = this.props.route.params.item.totalSpending;
                 initMoneyLeft = this.props.route.params.item.moneyLeft;
-        
+
                 initNotes = this.props.route.params.item.notes;
 
                 initImageURL = this.props.route.params.item.imageURL;
@@ -100,30 +84,19 @@ export class TripPlanScreen extends React.Component {
             }
         }
 
-        // let initList = [];
-        // for (let i = 0; i <25; i++){
-        //     initList.push({
-        //         text: 'item' + i,
-        //         key: '' + i
-        //     });
-        // }
-
         this.state = {
-
             userId: userId,
             tripTitle: initTripTitle,
             tripCategory: initTripCategory,
             tripStatus: initTripStatus,
 
-            // For Start Date
+            // for start date
             tripStartDateString: initTripStartDateString,
-            // (my) For Android, I may not need this.props.date
             tripStartDate: initTripStartDate,
             tripStartShow: initTripStartShow,
 
-            // For End Date
+            // for end date
             tripEndDateString: initTripEndDateString,
-            // (my) For Android, I may not need this.props.date
             tripEndDate: initTripEndDate,
             tripEndShow: initTtripEndShow,
 
@@ -133,16 +106,13 @@ export class TripPlanScreen extends React.Component {
 
             notes: initNotes,
 
-            // (my) For picture local uri
+            // for local picture  uri
             image: null,
 
+            // for global picture uri (Firebase)
             imageURL: initImageURL,
 
-            testTimeStamp: 0,
-            // Test
-            // theList: initList,
-
-            // Plan Items List
+            // plan items list
             planItems: initPlanItems,
 
             totalBudgetText: '(Once you add a budget in a plan item, the total budget will be updated automatically.)',
@@ -154,9 +124,7 @@ export class TripPlanScreen extends React.Component {
         LogBox.ignoreLogs(['Non-serializable values were found in the navigation state']);
     }
 
-    /*
-    componentDidMount for adding a new planItem
-    */
+    // componentDidMount for adding a new planItem
     componentDidMount() {
         this.focusUnsubscribe = this.props.navigation.addListener('focus', this.onFocus);
     }
@@ -166,19 +134,14 @@ export class TripPlanScreen extends React.Component {
     }
 
     onFocus = () => {
-        console.log('(TripPlan) onFocus check on the top working ');
         if (this.props.route.params) {
-            console.log('(TripPlan) onFocus inside working ');
             let itemOperation = this.props.route.params.itemOperation;
             let theItem = this.props.route.params.theItem;
-            // const {itemOperation, theItem} = this.props.route.params.theItem;
             // item is an object
             if (itemOperation === 'add') {
-                console.log('(TripPlan onFouce add -> theItem', theItem);
                 this.addItem(theItem);
             }
             if (itemOperation === 'edit') {
-                console.log('(TripPlan onFouce edit -> theItem', theItem);
                 this.updateItem(theItem);
             }
         }
@@ -187,16 +150,12 @@ export class TripPlanScreen extends React.Component {
     }
 
     addItem = (theItem) => {
-        console.log('(TripPlan) addItem old planItems list: ', this.state.planItems);
         let newList = this.state.planItems;
         newList.push(theItem);
-
         this.setState({planItems: newList});
-        console.log('(TripPlan) addItem new planItems list: ', this.state.planItems);
     }
 
     updateItem = (theItem) => {
-        console.log('(TripPlan) updateItem old planItems list: ', this.state.planItems);
         let newList = this.state.planItems;
         let foundIndex = -1;
 
@@ -212,8 +171,6 @@ export class TripPlanScreen extends React.Component {
         }
 
         this.setState({planItems: newList});
-        console.log('(TripPlan) updateItem new planItems list: ', this.state.planItems);
-
     }
 
     calculateMoney = () => {
@@ -222,79 +179,54 @@ export class TripPlanScreen extends React.Component {
         let theMoneyLeft = 0;
 
         let newList = this.state.planItems;
-        console.log('(TripPlan) calculateMoney newList: ', newList);
 
         for(let item of newList){
             theBudget += Number(item.itemBudget);
-            console.log('(TripPlan) calculateMoney theBudget:', theBudget);
-
             theSpending += Number(item.itemSpending);
-            console.log('(TripPlan) calculateMoney theSpending:', theSpending);
-
             theMoneyLeft = Number(theBudget - theSpending);
-            console.log('(TripPlan) calculateMoney theMoneyLeft:', theMoneyLeft);
         }
 
         this.setState({totalBudget: theBudget, totalSpending: theSpending, moneyLeft: theMoneyLeft});
-        // this.setState({totalBudget: theBudget});
-        // this.setState({totalSpending: theSpending});
-        // this.setState({moneyLeft: theMoneyLeft});
-
-        console.log('(TripPlan) calculateMoney this.state.totalBudget:', this.state.totalBudget);
-        console.log('(TripPlan) calculateMoney this.state.totalSpending:', this.state.totalSpending);
-        console.log('(TripPlan) calculateMoney this.state.moneyLeft:', this.state.moneyLeft);
     }
 
     onChangeStartDate = (event, selectedDate) => {
-        // console.log('new Date()', new Date());
-        // console.log('new Date()', typeof(new Date()));
-        console.log(selectedDate);
-
         this.setState(
             {
-                tripStartDateString: moment(selectedDate).format('MM/DD/YYYY'), 
-                tripStartDate: selectedDate, 
+                tripStartDateString: moment(selectedDate).format('MM/DD/YYYY'),
+                tripStartDate: selectedDate,
                 tripStartShow: false,
-                // Because the end date should be on or after the startdate, set the end date to match the start dates as well
-                tripEndDateString: moment(selectedDate).format('MM/DD/YYYY'), 
-                tripEndDate: selectedDate, 
+                // Because the end date should be on or after the start date, set the end date to match the start date when a user adds a start date
+                tripEndDateString: moment(selectedDate).format('MM/DD/YYYY'),
+                tripEndDate: selectedDate,
                 tripEndShow: false
             });
     }
 
     onChangeEndDate = (event, selectedDate) => {
-        console.log(selectedDate);
         this.setState({tripEndDateString: moment(selectedDate).format('MM/DD/YYYY'), tripEndDate: selectedDate, tripEndShow: false});
     }
 
     onCancel = () => {
         this.props.navigation.navigate("Home");
     }
-    // showOverlay = () => {
-    //     this.setState({ tripStartShow: true}) 
-    // }
+
     onAddOrEdit = () => {
         let theItem = {};
         if(this.operation === 'add'){
-            console.log("(Trip Plan) added in Trip Plan (this.operation): ", this.operation);
             theItem = {
                 userId: this.state.userId,
                 tripTitle: this.state.tripTitle,
                 tripCategory: this.state.tripCategory,
                 tripStatus: this.state.tripStatus,
-    
-                // For Start Date
+
+                // for start date
                 tripStartDateString: this.state.tripStartDateString,
-                // (my) For Android, I may not need this.props.date
                 tripStartDate: this.state.tripStartDate,
-                // tripStartShow: this.state.tripStartShow,
-    
-                // For Ednd Date
+
+                // for end date
                 tripEndDateString: this.state.tripEndDateString,
-                // (my) For Android, I may not need this.props.date
                 tripEndDate: this.state.tripEndDate,
-                // tripEndShow: this.state.tripEndShow,
-    
+
                 totalBudget: this.state.totalBudget,
                 totalSpending: this.state.totalSpending,
                 moneyLeft: this.state.moneyLeft,
@@ -303,13 +235,9 @@ export class TripPlanScreen extends React.Component {
                 imageURL: this.state.imageURL,
 
                 planItems: this.state.planItems,
-                // test timestamp
-                // testTimeStamp: this.state.testTimeStamp,
             }
         }
         else {
-            console.log("(Trip Plan) edited in Trip Plan (this.operation): ", this.operation);
-            console.log("(Trip Plan) edited in Trip Plan (this.props.route.params.item): ", this.props.route.params.item);
             theItem = this.props.route.params.item;
             theItem.tripTitle = this.state.tripTitle;
             theItem.tripCategory = this.state.tripCategory;
@@ -330,8 +258,6 @@ export class TripPlanScreen extends React.Component {
             theItem.imageURL = this.state.imageURL;
 
             theItem.planItems = this.state.planItems;
-            // test timestamp
-            // theItem.testTimeStamp = this.state.testTimeStamp;
         }
 
         this.props.navigation.navigate("Home", {
@@ -345,11 +271,10 @@ export class TripPlanScreen extends React.Component {
         let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         allowsEditing: true,
-        // (my) ratio for vertical and horizontal
+        // ratio for vertical and horizontal
         aspect: [4, 3],
         quality: 1,
         });
-        console.log(result);
 
         if (!result.cancelled) {
         this.setState({image: result.uri});
@@ -357,11 +282,8 @@ export class TripPlanScreen extends React.Component {
 
         // update to firebase storage
         let firebaseStorageURI = await this.dataModel.updateImage(result);
-        console.log('(Trip Plan) pickImage firebaseStorageURI', firebaseStorageURI);
 
         this.setState({imageURL: firebaseStorageURI});
-        console.log('(Trip Plan) pickImage this.state.imageURL', this.state.imageURL);
-
     };
 
     onEdit = (item) => {
@@ -372,8 +294,6 @@ export class TripPlanScreen extends React.Component {
     }
 
     deleteItem = (itemKey) => {
-        console.log('(Trip Plan) deleteItem itemKey', itemKey);
-
         let newList = this.state.planItems;
         let foundIndex = -1;
 
@@ -392,34 +312,25 @@ export class TripPlanScreen extends React.Component {
     }
 
     onDelete = (itemKey) => {
-        console.log('(Trip Plan) onDelete itemKey', itemKey);
         this.deleteItem(itemKey);
     }
 
     onDeletePicture = () =>{
-        console.log('(Trip Plan) onDeletePicture working');
-
         this.setState({imageURL: null, image: null});
     }
-
 
     render() {
         return (
             <View style={tripPlanStyles.container}>
-
                 {/* Top */}
                 <Logo/>
 
-                {/*  Flatlist */}
                 <View style={tripPlanStyles.flatListContainer}>
                     <FlatList
                         data={this.state.planItems}
-
                         // Header
                         ListHeaderComponent={
                             <View>
-
-
                                 {/* Content */}
                                 <View style={tripPlanStyles.contentView}>
                                     {/* Trip Information: Trip Title and Trip Category */}
@@ -431,7 +342,6 @@ export class TripPlanScreen extends React.Component {
                                                 placeholder='Add your trip title'
                                                 maxLength={40}
                                                 value={this.state.tripTitle}
-                                                // for Android, need to make keyboardType={"default"} to use secureTextEntry = {true}
                                                 keyboardType={"default"}
                                                 onChangeText={(text)=>{this.setState({tripTitle: text})}}
                                             />
@@ -444,7 +354,6 @@ export class TripPlanScreen extends React.Component {
                                                 placeholder='Add your trip category'
                                                 maxLength={40}
                                                 value={this.state.tripCategory}
-                                                // for Android, need to make keyboardType={"default"} to use secureTextEntry = {true}
                                                 keyboardType={"default"}
                                                 onChangeText={(text)=>{this.setState({tripCategory: text})}}
                                             />
@@ -492,10 +401,10 @@ export class TripPlanScreen extends React.Component {
                                         {/* Start Date */}
                                         <View style={tripPlanStyles.dateContainer}>
                                             <Text style={tripPlanStyles.dateText}>Start Date: </Text>
+                                            {/* Code Reference for date picker from https://medium.com/@jethro.riosa/implementation-of-react-native-community-datetimepicker-3acf4b69f5 */}
                                             <View style={tripPlanStyles.datePickerContainer}>
-                                                {/* Code Reference from https://medium.com/@jethro.riosa/implementation-of-react-native-community-datetimepicker-3acf4b69f5 */}
                                                 <TouchableOpacity onPress={()=> this.setState({tripStartShow: true})} style={tripPlanStyles.inputContainerStyle}>
-                                                    {/* (my) For android, I may not need  <Text style={styles.placeholderStyle}>{this.props.placeholder}</Text>
+                                                    {/* on android, may not need  <Text style={styles.placeholderStyle}>{this.props.placeholder}</Text>
                                                     )} */}
                                                     {this.state.tripStartDateString ? (
                                                         <Text style={tripPlanStyles.textStyle}>{this.state.tripStartDateString}</Text>
@@ -520,10 +429,10 @@ export class TripPlanScreen extends React.Component {
                                         {/* End Date */}
                                         <View style={tripPlanStyles.dateContainer}>
                                             <Text style={tripPlanStyles.dateText}>End Date: </Text>
+                                            {/* Code Reference for date picker from https://medium.com/@jethro.riosa/implementation-of-react-native-community-datetimepicker-3acf4b69f5 */}
                                             <View style={tripPlanStyles.endDatePickerContainer}>
-                                                {/* Code Reference from https://medium.com/@jethro.riosa/implementation-of-react-native-community-datetimepicker-3acf4b69f5 */}
                                                 <TouchableOpacity onPress={()=> this.setState({tripEndShow: true})} style={tripPlanStyles.inputContainerStyle}>
-                                                    {/* (my) For android, I may not need  <Text style={styles.placeholderStyle}>{this.props.placeholder}</Text>
+                                                    {/* on android, may not need  <Text style={styles.placeholderStyle}>{this.props.placeholder}</Text>
                                                     )} */}
                                                     {this.state.tripEndDateString ? (
                                                         <Text style={tripPlanStyles.textStyle}>{this.state.tripEndDateString}</Text>
@@ -584,14 +493,11 @@ export class TripPlanScreen extends React.Component {
                                             <View style={tripPlanStyles.notesTextInputContainer}>
                                                 <TextInput
                                                     style={tripPlanStyles.notesInputText}
-                                                    // autoCorrect={false}
                                                     placeholder='Add your notes'
                                                     value={this.state.notes}
-                                                    // for Android, need to make keyboardType={"default"} to use secureTextEntry = {true}
                                                     keyboardType={"default"}
                                                     multiline={true}
                                                     underlineColorAndroid='transparent'
-                                                    // numberOfLines={5}
                                                     onChangeText={(text)=>{this.setState({notes: text})}}
                                                 />
                                             </View>
@@ -602,7 +508,6 @@ export class TripPlanScreen extends React.Component {
                                         {this.props.route.params.operation === 'edit' && this.props.route.params.item.imageURL || this.state.image?
                                             <View style={tripPlanStyles.editOrDeleteIconContainer}>
                                                 <Text style={tripPlanStyles.pictureText}>Picture: </Text>
-                                                {/* <Button title="Pick an image from camera roll" onPress={this.pickImage} /> */}
                                                 <View style={tripPlanStyles.editOrDeleteIconContainer}>
                                                             <TouchableOpacity
                                                                 onPress={this.pickImage}
@@ -615,7 +520,6 @@ export class TripPlanScreen extends React.Component {
                                                             </TouchableOpacity>
                                                             <TouchableOpacity
                                                                 onPress={()=>{
-                                                                    // let tripTitle = item.tripTitle;
                                                                     Alert.alert(
                                                                         'Delete Picture',
                                                                         'Are you sure you want to delete the picture?',
@@ -626,8 +530,8 @@ export class TripPlanScreen extends React.Component {
                                                                     );
                                                                     }}
                                                             >
-                                                                <Ionicons name="md-trash" 
-                                                                    size={21} 
+                                                                <Ionicons name="md-trash"
+                                                                    size={21}
                                                                     color={colors.primary} />
                                                             </TouchableOpacity>
                                                 </View>
@@ -639,7 +543,6 @@ export class TripPlanScreen extends React.Component {
                                         }
                                             {this.props.route.params.operation === 'edit' && this.state.imageURL?
                                                 <View style={tripPlanStyles.imageContainer}>
-                                                    {/* width and height below is configued the image that was taken */}
                                                         <Image source={{uri: this.state.imageURL}}
                                                                 style={tripPlanStyles.imageStyle}
                                                         />
@@ -650,14 +553,13 @@ export class TripPlanScreen extends React.Component {
                                                 <View style={this.state.image ? tripPlanStyles.imageContainer : tripPlanStyles.imageDefaultParentContainer}>
                                                 {this.state.image ?
                                                     <Image source={{uri: this.state.imageURL}}
-                                                    style={tripPlanStyles.imageStyle} 
+                                                    style={tripPlanStyles.imageStyle}
                                                     />
                                                     :
                                                     <View style={tripPlanStyles.imageDefaultContainer}>
                                                         <Text style={tripPlanStyles.imageDefaultText}>Add a trip picture</Text>
                                                         <View>
                                                             <TouchableOpacity
-                                                                // style={homeStyles.defaultButton}
                                                                 onPress={this.pickImage}
                                                             >
                                                                 <MaterialIcons name="add-circle-outline" size={50} color={colors.primary} />
@@ -671,7 +573,7 @@ export class TripPlanScreen extends React.Component {
                                         </View>
                                     </View>
 
-                                    {/* Plan Items Section just header */}
+                                    {/* Plan Items Section (just its header) */}
                                     <View style={tripPlanStyles.tripSnapshotContainer}>
                                         <Text style={tripPlanStyles.tripheaderText}>Plan Items</Text>
                                     </View>
@@ -679,9 +581,7 @@ export class TripPlanScreen extends React.Component {
                             </View>
                         }
                         keyExtractor={item => item.itemKey}
-                        // FlatLst
                         renderItem={({item}) => {
-                            // console.log('item', item.text)
                             return(
                                 <View>
                                     <View style={tripPlanStyles.flatRenderItemContainer}>
@@ -697,7 +597,7 @@ export class TripPlanScreen extends React.Component {
                                                 />
                                         </TouchableOpacity>
                                         <TouchableOpacity
-                                            // Add Cancel Confirmation
+                                            // add cancel confirmation
                                             onPress={()=>{
                                                 let itemTitle = item.itemTitle;
                                                 Alert.alert(
@@ -727,7 +627,7 @@ export class TripPlanScreen extends React.Component {
                         // Bottom View
                         ListFooterComponent={
                             <View>
-                                {/* For a new plan item button and text */}
+                                {/* For a new plan item's add button and text */}
                                 <View style={tripPlanStyles.addPlanItemContainer}>
                                     <TouchableOpacity
                                         style={tripPlanStyles.addPlanItemSection}
@@ -741,7 +641,7 @@ export class TripPlanScreen extends React.Component {
                                         <Text style={tripPlanStyles.addPlanItemSectionText}>Add a new plan item</Text>
                                     </TouchableOpacity>
                                 </View>
-                                {/* For Button */}
+                                {/* For a save and cancel buttons */}
                                 <View style={tripPlanStyles.bottomView}>
                                     <View style={tripPlanStyles.cancelContainer}>
                                         <TouchableOpacity 
@@ -764,7 +664,6 @@ export class TripPlanScreen extends React.Component {
                         }
                     />
                 </View>
-
             </View>
         );
     }

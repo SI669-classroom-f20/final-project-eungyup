@@ -22,17 +22,10 @@ export class LoginScreen extends React.Component {
     }
 
     onCreateAccount = async () => {
-
-        // check that this is a valid email (skipping this)
-        // check password rules (skipping this)
-        // check that passwords match (skipping this)
-        // check that displayName isn't empty (skipping this)
-
         // check that user doesn't already exist
         let users = this.dataModel.getUsers();
         for (let user of users) {
             if (user.email === this.state.emailInput) {
-                console.log("found matching user");
                 Alert.alert(
                     'Duplicate User',
                     'User ' + this.state.emailInput + ' already exists.',
@@ -41,7 +34,6 @@ export class LoginScreen extends React.Component {
                 return;
             }
         } // made it through loop, no user exists!
-        console.log("no matching user found, creating");
         let newUser = await this.dataModel.createUser(
             this.state.emailInput,
             this.state.passwordInput
@@ -76,15 +68,11 @@ export class LoginScreen extends React.Component {
 
     render() {
         return (
-            // <KeyboardAvoidingView
-            //     style={loginStyles.container}
-            //     behavior={"height"}
-            //     keyboardVerticalOffset={10}>
             <View style={loginStyles.container}>
                 {/* Top */}
                 <Logo/>
-                <ScrollView>
 
+                <ScrollView>
                     {/* Content */}
                     <View style={loginStyles.contentView}>
                         <Text style={loginStyles.welcomeText}>Welcome</Text>

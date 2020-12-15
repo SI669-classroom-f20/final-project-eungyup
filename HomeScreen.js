@@ -9,43 +9,19 @@ export class HomeScreen extends React.Component {
     constructor(props) {
         super(props);
 
-        // console.log("in HomeScreen, route.params = ", props.route.params);
-
-
-        // let initList = [];
-        // for (let i = 0; i <40; i++){
-        //     initList.push({
-        //         text: 'item' + i,
-        //         key: '' + i
-        //     });
-        // }
-
         this.dataModel = getDataModel();
         if (this.props.route.params){
-            // console.log("in HomeScreen, this.props.route.params.currentUser", this.props.route.params.currentUser);
             this.userId = this.props.route.params.currentUser.key;
         }
 
-
         this.nextKey = 0;
         this.state = {
-            // user: this.props.route.params.currentUser,
-            theList: [],
             theImage: require('./assets/ImageNotAvailable.png'),
-
             DATA: [],
         }
     }
 
     componentDidMount() {
-        // create or get data from firebase
-        // this.getListItems();
-        // this.focusUnsubscribe = this.props.navigation.addListener('focus', this.onFocus);
-
-        // because we need to wait to getOrCreate trip and get a trip data, use async, await
-        // in componentDidMount() => we cannot use async so create a new function
-        // this.subscribeToPlan();
-
         this.focusUnsubscribe = this.props.navigation.addListener('focus', this.onFocus);
     }
 
@@ -54,43 +30,32 @@ export class HomeScreen extends React.Component {
     }
 
     subscribeToPlan = async() => {
-        // userSpecificPlans is an array with plans objects related to the user
-        // first clear the theList (otherwise get duplicate lists)
         this.state.DATA = [];
+        // userSpecificPlans is an array with plans objects related to the user
         this.userSpecificPlans = await this.dataModel.getPlans(this.userId);
-        console.log('(home)this.userSpecificPlans', this.userSpecificPlans);
 
         if(this.userSpecificPlans){
             this.orderListByStatus(this.userSpecificPlans);
-            // let orderedByStatusList = this.orderListByStatus(this.userSpecificPlans);
-
-            // this.setState({theList: orderedByStatusList})
-            // // this.setState({theList: this.userSpecificPlans});
-            // console.log('(home) theList', this.state.theList);
         }
-        // when there is no item after deleting => clean the list
+        // when there is no item after deleting, clean the list
         else{
             let aCleanList = []
             this.setState({DATA: aCleanList});
         }
     }
 
-    // (my) added async to add/update data first then get plans in the this.subscribeToPlan()
+    // added async here so that await add/update data first then get plans in the this.subscribeToPlan()
     onFocus = async () => {
         if (this.props.route.params) {
             const {operation, item} = this.props.route.params;
             // item is an object
             if (operation === 'add') {
-                console.log('(Home Screen onFouce add -> item', item);
                 await this.dataModel.addItem(item);
-            } 
+            }
             else if (operation === 'edit') {
-                console.log('(Home Screen onFouce edit -> item', item);
                 await this.dataModel.updateItem(item);
             }
         }
-        // (my) to get an updated plans by ordered by tripStartDate call getDataModel one more time
-        // this.dataModel = await getDataModel();
         this.subscribeToPlan();
         this.props.navigation.setParams({operation: 'none'});
     }
@@ -119,7 +84,6 @@ export class HomeScreen extends React.Component {
         let newData = [];
 
         for(let plan of userSpecificPlans){
-            // console.log('(Home orderListByStatus', plan);
             if(plan.tripStatus == 'onTrip'){
                 onTripList.push(plan);
             }
@@ -129,54 +93,35 @@ export class HomeScreen extends React.Component {
             if(plan.tripStatus == 'completed'){
                 completedList.push(plan);
             }
-            // console.log('(Home orderListByStatus onTripList', onTripList);
         }
 
         if(onTripList.length){
-            console.log('onTripList.length', onTripList.length);
             onTripObj = {title: "On Trip", data: onTripList};
-            console.log('onTripObj', onTripObj);
-
             newData.push(onTripObj);
         }
 
         if(upcomingList.length){
-            console.log('upcomingList.length', upcomingList.length);
             upcomingObj = {title: "Upcoming Trip", data: upcomingList};
-            console.log('upcomingObj', upcomingObj);
-
             newData.push(upcomingObj);
         }
 
         if(completedList.length){
-            console.log('completedList.length', completedList.length);
             completedObj = {title: "Completed", data: completedList};
-            console.log('upcomingObj', upcomingObj);
-
             newData.push(completedObj);
         }
 
-        console.log('newData', newData);
         this.setState({DATA: newData});
-
-        console.log('this.state.DATA', this.state.DATA);
-        // combinedArray.push(...onTripList, ...upcomingList, ...completed);
-        // console.log('(Home orderListByStatus combinedArray', combinedArray);
-
-        // return combinedArray;
     }
-
 
     render() {
         return (
             <View style={homeStyles.container}>
                 {/* Top */}
                 <Logo/>
-                {/*  Flatlist */}
+
                 <View style={homeStyles.scrollListContainer}>
                     <SectionList
                         sections={this.state.DATA}
-
                         // Header
                         ListHeaderComponent={
                             <View style={homeStyles.test}>
@@ -207,9 +152,6 @@ export class HomeScreen extends React.Component {
                         }
                         keyExtractor={(item, index) => item.tripTitle + index}
                         renderItem={({item}) => {
-                            console.log('item', item);
-                            console.log('item.tripStatus', item.tripStatus);
-                            // console.log("on the top asjdlfkjsadlkfjlasjdfl˚å∆ß¬ƒ˚jlksa");
                                 return(
                                     <View >
                                         {/* Individual Tile */}
@@ -242,7 +184,7 @@ export class HomeScreen extends React.Component {
                                                             />
                                                     </TouchableOpacity>
                                                     <TouchableOpacity
-                                                        // Add Cancel Confirmation
+                                                        // add cancel confirmation
                                                         onPress={()=>{
                                                             let tripTitle = item.tripTitle;
                                                             Alert.alert(
@@ -279,16 +221,9 @@ export class HomeScreen extends React.Component {
                             </View>
                         </View>
                     )}
-                    // ItemSeparatorComponent={()=>(
-                    //     <View style={homeStyles.separator}/>
-                    // )}
                     />
                 </View>
-
-
-
             </View>
-
         );
     }
 }
