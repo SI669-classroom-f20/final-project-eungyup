@@ -1,6 +1,6 @@
-import React, {useEffect} from 'react';
-import { KeyboardAvoidingView, StyleSheet, TextInput, Text, View, Image, FlatList, TouchableOpacity, Alert, SafeAreaView, ScrollView, LogBox, Platform, Button} from 'react-native';
-import { FontAwesome5, Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import React from 'react';
+import { View, Text, TextInput, TouchableOpacity, ScrollView, LogBox } from 'react-native';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 import { RadioButton } from 'react-native-paper';
 // For Date Picker
@@ -8,13 +8,8 @@ import DateTimePicker from '@react-native-community/datetimepicker'
 import moment from "moment";
 
 import { planItemStyles, colors } from './Styles';
-
-
 import { getDataModel } from './DataModel';
-// for Picture
-import * as ImagePicker from 'expo-image-picker';
-// import Constants from 'expo-constants';
-// import { render } from 'react-dom';
+
 import Logo from './Logo'
 
 

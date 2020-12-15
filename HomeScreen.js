@@ -1,11 +1,8 @@
 import React from 'react';
-import { StyleSheet, TextInput, Text, View, Image, SectionList, FlatList, TouchableOpacity, Alert, KeyboardAvoidingView } from 'react-native';
-import { Ionicons, MaterialIcons ,MaterialCommunityIcons } from '@expo/vector-icons';
-
+import { View, Text, Image, SectionList, TouchableOpacity, Alert } from 'react-native';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { homeStyles, colors } from './Styles';
 import { getDataModel } from './DataModel';
-
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 import Logo from './Logo'
 
 export class HomeScreen extends React.Component {

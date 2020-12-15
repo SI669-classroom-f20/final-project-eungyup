@@ -1,6 +1,5 @@
 import React from 'react';
-import { TextInput, Text, View, Image, TouchableOpacity, KeyboardAvoidingView, ScrollView, Alert, LogBox } from 'react-native';
-
+import { View, Text, TextInput, TouchableOpacity, ScrollView, Alert, LogBox } from 'react-native';
 import { loginStyles } from './Styles';
 import { getDataModel } from './DataModel';
 import Logo from './Logo'

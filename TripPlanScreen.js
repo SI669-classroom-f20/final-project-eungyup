@@ -1,7 +1,6 @@
-import React, {useEffect} from 'react';
-import { StyleSheet, TextInput, Text, View, Image, FlatList, TouchableOpacity, Alert, SafeAreaView, ScrollView, Platform, Button} from 'react-native';
-import { FontAwesome ,FontAwesome5, Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
-
+import React from 'react';
+import { View, Text, TextInput, Image, FlatList, TouchableOpacity, Alert, LogBox} from 'react-native';
+import { FontAwesome ,FontAwesome5, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { RadioButton } from 'react-native-paper';
 // For Date Picker
 import DateTimePicker from '@react-native-community/datetimepicker'
@@ -9,12 +8,10 @@ import moment from "moment";
 
 import { tripPlanStyles, colors } from './Styles';
 
-
 import { getDataModel } from './DataModel';
 // for Picture
 import * as ImagePicker from 'expo-image-picker';
-// import Constants from 'expo-constants';
-// import { render } from 'react-dom';
+
 import Logo from './Logo'
 
 
@@ -152,6 +149,9 @@ export class TripPlanScreen extends React.Component {
             totalSpendingText: '(Once you add a spending in a plan item, the total spending will be updated automatically.)',
             moneyLeftText: '(Once you add a budget and a spending in a plan item, the money left will be updated automatically.)'
         }
+        // Because of passing a timestamp, it gives this log.
+        // However, since this log doesn't affect the app function, make it ignore.
+        LogBox.ignoreLogs(['Non-serializable values were found in the navigation state']);
     }
 
     /*
