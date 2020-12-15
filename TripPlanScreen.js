@@ -165,8 +165,6 @@ export class TripPlanScreen extends React.Component {
     */
     componentDidMount() {
         this.focusUnsubscribe = this.props.navigation.addListener('focus', this.onFocus);
-        // get the updated mony
-        // this.calcurateMoney();
     }
 
     componentWillUnmount() {
@@ -190,7 +188,7 @@ export class TripPlanScreen extends React.Component {
                 this.updateItem(theItem);
             }
         }
-        this.calcurateMoney();
+        this.calculateMoney();
         this.props.navigation.setParams({itemOperation: 'none'});
     }
 
@@ -224,23 +222,23 @@ export class TripPlanScreen extends React.Component {
 
     }
 
-    calcurateMoney = () => {
+    calculateMoney = () => {
         let theBudget = 0;
         let theSpending = 0 ;
         let theMoneyLeft = 0;
 
         let newList = this.state.planItems;
-        console.log('(TripPlan) calcurateMoney newList: ', newList);
+        console.log('(TripPlan) calculateMoney newList: ', newList);
 
         for(let item of newList){
             theBudget += Number(item.itemBudget);
-            console.log('(TripPlan) calcurateMoney theBudget:', theBudget);
+            console.log('(TripPlan) calculateMoney theBudget:', theBudget);
 
             theSpending += Number(item.itemSpending);
-            console.log('(TripPlan) calcurateMoney theSpending:', theSpending);
+            console.log('(TripPlan) calculateMoney theSpending:', theSpending);
 
             theMoneyLeft = Number(theBudget - theSpending);
-            console.log('(TripPlan) calcurateMoney theMoneyLeft:', theMoneyLeft);
+            console.log('(TripPlan) calculateMoney theMoneyLeft:', theMoneyLeft);
         }
 
         this.setState({totalBudget: theBudget, totalSpending: theSpending, moneyLeft: theMoneyLeft});
@@ -248,9 +246,9 @@ export class TripPlanScreen extends React.Component {
         // this.setState({totalSpending: theSpending});
         // this.setState({moneyLeft: theMoneyLeft});
 
-        console.log('(TripPlan) calcurateMoney this.state.totalBudget:', this.state.totalBudget);
-        console.log('(TripPlan) calcurateMoney this.state.totalSpending:', this.state.totalSpending);
-        console.log('(TripPlan) calcurateMoney this.state.moneyLeft:', this.state.moneyLeft);
+        console.log('(TripPlan) calculateMoney this.state.totalBudget:', this.state.totalBudget);
+        console.log('(TripPlan) calculateMoney this.state.totalSpending:', this.state.totalSpending);
+        console.log('(TripPlan) calculateMoney this.state.moneyLeft:', this.state.moneyLeft);
     }
 
     onChangeStartDate = (event, selectedDate) => {
