@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TextInput, Text, View, Image, SectionList, FlatList, TouchableOpacity, Alert, KeyboardAvoidingView, LogBox } from 'react-native';
+import { StyleSheet, TextInput, Text, View, Image, SectionList, FlatList, TouchableOpacity, Alert, KeyboardAvoidingView } from 'react-native';
 import { Ionicons, MaterialIcons ,MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { homeStyles, colors } from './Styles';
@@ -38,10 +38,6 @@ export class HomeScreen extends React.Component {
 
             DATA: [],
         }
-
-        // (my) just ignore the warnign sign
-        // Becuase this log doesn't affect the app function, make it ignore
-        LogBox.ignoreLogs(['Setting a timer']);
     }
 
     componentDidMount() {

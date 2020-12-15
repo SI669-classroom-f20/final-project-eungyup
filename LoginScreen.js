@@ -17,7 +17,8 @@ export class LoginScreen extends React.Component {
             passwordInput: '',
             passwordCheckInput: ''
         }
-        // Becuase this log doesn't affect the app function, make it ignore
+        // For Android, if there is a large file like a picture it gives this log.
+        // However, since this log doesn't affect the app function, make it ignore.
         LogBox.ignoreLogs(['Setting a timer']);
     }
 

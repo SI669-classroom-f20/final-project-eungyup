@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import { StyleSheet, TextInput, Text, View, Image, FlatList, TouchableOpacity, Alert, SafeAreaView, ScrollView, LogBox, Platform, Button} from 'react-native';
+import { StyleSheet, TextInput, Text, View, Image, FlatList, TouchableOpacity, Alert, SafeAreaView, ScrollView, Platform, Button} from 'react-native';
 import { FontAwesome ,FontAwesome5, Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 
 import { RadioButton } from 'react-native-paper';
@@ -152,12 +152,6 @@ export class TripPlanScreen extends React.Component {
             totalSpendingText: '(Once you add a spending in a plan item, the total spending will be updated automatically.)',
             moneyLeftText: '(Once you add a budget and a spending in a plan item, the money left will be updated automatically.)'
         }
-
-        // (my) just ignore the warnign sign
-        // Becuase this log doesn't affect the app function, make it ignore
-        LogBox.ignoreLogs(['Setting a timer']);
-        LogBox.ignoreLogs(['Non-serializable values were found in the navigation state']);
-        // LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
     }
 
     /*

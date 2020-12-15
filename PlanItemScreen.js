@@ -109,12 +109,9 @@ export class PlanItemScreen extends React.Component {
             itemKeyNumber: initRandomKeyNumber,
         }
 
-
-        // (my) just ignore the warnign sign
-        // Becuase this log doesn't affect the app function, make it ignore
-        LogBox.ignoreLogs(['Setting a timer']);
+        // Because of passing a timestamp, it gives this log.
+        // However, since this log doesn't affect the app function, make it ignore.
         LogBox.ignoreLogs(['Non-serializable values were found in the navigation state']);
-        // LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
     }
 
     onChangeStartDate = (event, selectedDate) => {
