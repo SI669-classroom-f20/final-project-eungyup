@@ -233,22 +233,12 @@ export class TripPlanScreen extends React.Component {
         console.log('(TripPlan) calcurateMoney newList: ', newList);
 
         for(let item of newList){
-            if(item.itemBudget){
-                theBudget += Number(item.itemBudget);
-                console.log('(TripPlan) calcurateMoney theBudget:', theBudget);
-            }
-            if(item.itemSpending){
-                theSpending += Number(item.itemSpending);
-                console.log('(TripPlan) calcurateMoney theSpending:', theSpending);
-            }
-        }
+            theBudget += Number(item.itemBudget);
+            console.log('(TripPlan) calcurateMoney theBudget:', theBudget);
 
-        if(theBudget !== 0 && Number(theSpending) === 0){
-            theMoneyLeft = Number(theBudget);
-            console.log('(TripPlan) calcurateMoney theMoneyLeft:', theMoneyLeft);
-        }
+            theSpending += Number(item.itemSpending);
+            console.log('(TripPlan) calcurateMoney theSpending:', theSpending);
 
-        if(theBudget !== 0 && theSpending !==0){
             theMoneyLeft = Number(theBudget - theSpending);
             console.log('(TripPlan) calcurateMoney theMoneyLeft:', theMoneyLeft);
         }
